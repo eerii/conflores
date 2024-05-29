@@ -1,0 +1,28 @@
+[package]
+name = "blog"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev.package.askama_derive]
+opt-level = 3
+
+[dependencies]
+askama = { version = "0.12", features = ["with-axum", "markdown"] }
+askama_axum = "0.4"
+axum = "0.7"
+chrono = { version = "0.4", features = ["serde"] }
+dotenvy_macro = "0.15"
+futures = "0.3"
+gray_matter = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+time = { version = "0.3", features = ["local-offset", "serde"] }
+tokio = { version = "1.37", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["fs", "trace", "timeout"] }
+tower-livereload = "0.9"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "time"] }
+
+[[bin]]
+name = "blog"
+path = "src/main.rs"

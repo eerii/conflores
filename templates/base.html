@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Meta -->
+        <title>{% block title %}ConFlores{% endblock %}</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+            name="description"
+            content="I don't know what to write here."
+        />
+
+        <!-- Scripts -->
+        <script src="/assets/lib/htmx.min.js"></script>
+        <script src="/assets/lib/inline_css.js"></script>
+
+        <!-- Style and static content -->
+        <link rel="stylesheet" href="/assets/style/modern_normalize.css" />
+        <link rel="stylesheet" href="/assets/style/base.css" />
+        <link rel="stylesheet" href="/assets/style/modules.css" />
+        <link rel="shortcut icon" href="/assets/favicon.ico" />
+
+        <!-- Preload -->
+        <link rel="preload" href="/assets/fonts/mabry.ttf" />
+
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <!-- Navigation bar -->
+        {% include "nav.html" %}
+
+        <!-- Content -->
+        <div class="content">
+            {% block content %}
+            <h1>Nothing to see here 🤫</h1>
+            {% endblock %}
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with &lt;3 by Eri</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+.envrc
+.env
+.cache
+.cargo
+.prettier*
+/target

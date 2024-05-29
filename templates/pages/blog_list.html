@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+<!-- -->
+
+{% block content %}
+<h2>Blog</h2>
+
+<div class="paragrafos">
+    {% for (name, slug) in articles %}
+    <a href="/blog/{{ slug }}">{{name}}</a>
+    {% endfor %}
+</div>
+{% endblock %}
