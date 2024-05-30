@@ -1,6 +1,6 @@
 ---
 title = "Writing it out"
-date = 2024-05-29
+published = 2024-05-29
 tags = ["outreachy"]
 ---
 

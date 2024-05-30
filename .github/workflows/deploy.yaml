@@ -72,7 +72,6 @@ jobs:
 
       - name: Deploy 🚀
         run: |
-          tree ${{ github.workspace }}
           rsync -vmr -e "ssh -p ${{ secrets.SSH_PORT }}" ${{ github.workspace }}/target/aarch64-unknown-linux-gnu/release/conflores ${{ secrets.USER }}@${{ secrets.IP }}:/home/${{ secrets.USER }}/conflores/
           rsync -vmr -e "ssh -p ${{ secrets.SSH_PORT }}" ${{ github.workspace }}/assets ${{ secrets.USER }}@${{ secrets.IP }}:/home/${{ secrets.USER }}/conflores/
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.USER }}@${{ secrets.IP }} "sudo /root/restart_conflores --force"

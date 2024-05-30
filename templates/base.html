@@ -16,30 +16,56 @@
 
         <!-- Style and static content -->
         <link rel="stylesheet" href="/assets/style/modern_normalize.css" />
-        <link rel="stylesheet" href="/assets/style/base.css" />
-        <link rel="stylesheet" href="/assets/style/modules.css" />
         <link rel="shortcut icon" href="/assets/favicon.ico" />
 
-        <!-- Preload -->
-        <link rel="preload" href="/assets/fonts/mabry.ttf" />
-
         {% block head %}{% endblock %}
-    </head>
+    </head> 
 
     <body>
-        <!-- Navigation bar -->
-        {% include "nav.html" %}
+        <style>
+            this {
+                background-color: #eeeeee;
+            }
 
-        <!-- Content -->
-        <div class="content">
-            {% block content %}
-            <h1>Nothing to see here 🤫</h1>
-            {% endblock %}
+            this .frame {
+                display: flex;
+                flex-direction: column;
+
+                min-height: 100vh;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+
+                background-color: white;
+            }
+
+            this .content {
+                flex-grow: 1;
+                padding: 0 1rem;
+            }
+
+            p, h2, h3 {
+                margin-bottom: 0.5rem;
+            }
+
+            a {
+                color: hotpink;
+            }
+        </style>
+        
+        <div class="frame">
+            <!-- Navigation bar -->
+            {% include "nav.html" %}
+
+            <!-- Content -->
+            <div class="content">
+                {% block content %}
+                <h1>Nothing to see here 🤫</h1>
+                {% endblock %}
+            </div>
+
+            <!-- Footer -->
+            {% include "footer.html" %}
         </div>
-
-        <!-- Footer -->
-        <footer>
-            <p>Made with &lt;3 by Eri</p>
-        </footer>
     </body>
 </html>
