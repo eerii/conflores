@@ -1,0 +1,78 @@
+name: Deploy web 🌙
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    name: Check 👁️
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🍎
+        uses: actions/checkout@v4
+
+      - name: Load environment 🤫
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Install rust 🦀
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt, clippy
+
+      - name: Check format 🧹
+        run: |
+          cargo fmt -- --check
+
+      - name: Clippy 📎
+        run: |
+          cargo clippy -- -D warnings
+
+  deploy:
+    name: Deploy 🚀
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout 🍎
+        uses: actions/checkout@v4
+
+      - name: Load environment 🤫
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: File list 📂
+        run: |
+          ls ${{ github.workspace }}
+
+      - name: Cache 🪴
+        uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          path: target/
+
+      - name: Build 📦
+        uses: houseabsolute/actions-rust-cross@v0
+        with:
+          target: aarch64-unknown-linux-gnu
+          toolchain: nightly
+          args: --release
+
+      - name: Configure SSH 🐈
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIV_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PUB_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy 🚀
+        run: |
+          tree ${{ github.workspace }}
+          rsync -vmr -e "ssh -p ${{ secrets.SSH_PORT }}" ${{ github.workspace }}/target/aarch64-unknown-linux-gnu/release/conflores ${{ secrets.USER }}@${{ secrets.IP }}:/home/${{ secrets.USER }}/conflores/
+          rsync -vmr -e "ssh -p ${{ secrets.SSH_PORT }}" ${{ github.workspace }}/assets ${{ secrets.USER }}@${{ secrets.IP }}:/home/${{ secrets.USER }}/conflores/
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.USER }}@${{ secrets.IP }} "sudo /root/restart_conflores --force"

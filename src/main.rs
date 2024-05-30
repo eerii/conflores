@@ -1,4 +1,4 @@
-use blog::{init_tracing, routes::router, shutdown_signal};
+use conflores::{init_tracing, routes::router, shutdown_signal};
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 use tracing::info;
@@ -21,7 +21,7 @@ async fn main() {
     };
 
     // Launch the server
-    let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = TcpListener::bind("0.0.0.0:4000").await.unwrap();
 
     info!("active server on http://{}", listener.local_addr().unwrap());
 

@@ -1,5 +1,5 @@
 [package]
-name = "blog"
+name = "conflores"
 version = "0.1.0"
 edition = "2021"
 
@@ -24,5 +24,5 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "time"] }
 
 [[bin]]
-name = "blog"
+name = "conflores"
 path = "src/main.rs"

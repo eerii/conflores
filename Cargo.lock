@@ -200,27 +200,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf4b9d6a944f767f8e5e0db018570623c85f3d925ac718db4e06d0187adb21c1"
 
 [[package]]
-name = "blog"
-version = "0.1.0"
-dependencies = [
- "askama",
- "askama_axum",
- "axum",
- "chrono",
- "dotenvy_macro",
- "futures",
- "gray_matter",
- "serde",
- "time",
- "tokio",
- "tower",
- "tower-http",
- "tower-livereload",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "bumpalo"
 version = "3.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -272,6 +251,27 @@ dependencies = [
  "slug",
  "typed-arena",
  "unicode_categories",
+]
+
+[[package]]
+name = "conflores"
+version = "0.1.0"
+dependencies = [
+ "askama",
+ "askama_axum",
+ "axum",
+ "chrono",
+ "dotenvy_macro",
+ "futures",
+ "gray_matter",
+ "serde",
+ "time",
+ "tokio",
+ "tower",
+ "tower-http",
+ "tower-livereload",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
