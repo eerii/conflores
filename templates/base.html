@@ -16,44 +16,33 @@
 
         <!-- Style and static content -->
         <link rel="stylesheet" href="/assets/style/modern_normalize.css" />
+        <link rel="stylesheet" href="/assets/style/base.css" />
         <link rel="shortcut icon" href="/assets/favicon.ico" />
 
         {% block head %}{% endblock %}
     </head> 
 
     <body>
-        <style>
-            this {
-                background-color: #eeeeee;
-            }
-
-            this .frame {
-                display: flex;
-                flex-direction: column;
-
-                min-height: 100vh;
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
-
-                background-color: white;
-            }
-
-            this .content {
-                flex-grow: 1;
-                padding: 0 1rem;
-            }
-
-            p, h2, h3 {
-                margin-bottom: 0.5rem;
-            }
-
-            a {
-                color: hotpink;
-            }
-        </style>
-        
         <div class="frame">
+            <style>
+                this {
+                    display: flex;
+                    flex-direction: column;
+
+                    min-height: 100vh;
+                    max-width: 800px;
+                    margin-left: auto;
+                    margin-right: auto;
+
+                    background-color: white;
+                }
+
+                this .content {
+                    flex-grow: 1;
+                    padding: 0 calc(var(--spacing) * 2);
+                }
+            </style>
+
             <!-- Navigation bar -->
             {% include "nav.html" %}
 

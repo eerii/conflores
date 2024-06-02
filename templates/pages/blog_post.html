@@ -4,22 +4,53 @@
 
 {% block content %}
 <div>
+    <style>
+        this {
+            border: 1px solid var(--accent);
+            background: var(--accent-bg);
+            padding: var(--spacing);
+            border-radius: var(--spacing);
+
+            display: flex;
+            align-items: center;
+        }
+
+        this h1 {
+            flex-grow: 1;
+            font-size: 1.55rem;
+        }
+
+        this .meta {
+            text-align: right;
+        }
+
+        this p {
+            margin-bottom: 0;
+            font-size: 0.8rem;
+        }
+    </style>
+    
     <h1>{{ data.title }}</h1>
 
-    {{ data.published.unwrap_or_default() }}
-
-    <div>
+    <div class="meta">
+        <p>{{ data.published.unwrap_or_default() }}</p>
         {% if !data.tags.is_empty() %}
-        <span>Tags: {% for tag in data.tags %}{{ tag }} {% endfor %}</span>
+        <p>Tags: {% for tag in data.tags %}{{ tag }} {% endfor %}</p>
         {% endif %}
     </div>
 </div>
 
-<hr style="margin-top: 0;"/>
-
 {% if body.is_some() %}
-    <div class="paragrafos">
-    {{body.as_ref().unwrap()|markdown}}
+    <div>
+        <style>
+            this p {
+                text-align: justify;
+                text-justify: inter-word;
+                line-height: 150%;
+                margin: var(--spacing) 0;
+            }
+        </style>
+        {{body.as_ref().unwrap()|markdown}}
     </div>
 {% endif %}
 {% endblock %}

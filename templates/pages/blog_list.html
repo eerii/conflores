@@ -3,9 +3,20 @@
 <!-- -->
 
 {% block content %}
-<h2>Blog</h2>
+<div>
+    <style>
+        this {
+            text-align: center;
+            width: 100%;
+        }
 
-<div class="paragrafos">
+        this a {
+            font-family: var(--font-special);
+            font-weight: 500;
+            font-size: 1.35rem;
+            margin-top: 2rem;
+        }
+    </style>
     {% for (name, slug) in articles %}
     <a href="/blog/{{ slug }}">{{name}}</a>
     {% endfor %}
