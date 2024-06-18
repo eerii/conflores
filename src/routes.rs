@@ -53,7 +53,7 @@ const BLOG_PATH: &str = "assets/blog";
 #[derive(Template)]
 #[template(path = "pages/blog_list.html")]
 pub struct TemplateBlogList {
-    articles: HashMap<String, String>,
+    articles: HashMap<String, BlogPostData>,
 }
 
 pub async fn blog_list() -> TemplateBlogList {
@@ -86,19 +86,17 @@ pub async fn blog_list() -> TemplateBlogList {
             if !data.contains_key("published") {
                 continue;
             }
+
+            let slug = name.trim_end_matches(".md").to_string();
+            articles.insert(slug, matter.deserialize().unwrap_or_default());
         }
-
-        let slug = name.trim_end_matches(".md").to_string();
-        let title = matter["title"].as_string().unwrap_or(slug.clone());
-
-        articles.insert(title, slug);
     }
 
     TemplateBlogList { articles }
 }
 
 // Article body
-#[derive(Template, Default)]
+#[derive(Template)]
 #[template(path = "pages/blog_post.html")]
 pub struct TemplateBlogPost {
     data: BlogPostData,
@@ -114,6 +112,7 @@ struct BlogPostData {
 
 pub async fn blog_post(Path(slug): Path<String>) -> TemplateBlogPost {
     let Ok(body) = std::fs::read_to_string(format!("{}/{}.md", BLOG_PATH, slug)) else {
+        // TODO: Find a new way of rendering markdown since askama deprecated it
         return TemplateBlogPost {
             data: BlogPostData {
                 title: "Blog post not found".into(),

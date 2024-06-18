@@ -3,4 +3,5 @@
 .cache
 .cargo
 .prettier*
+.direnv
 /target

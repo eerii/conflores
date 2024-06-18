@@ -3,9 +3,6 @@ name = "conflores"
 version = "0.1.0"
 edition = "2021"
 
-[profile.dev.package.askama_derive]
-opt-level = 3
-
 [dependencies]
 askama = { version = "0.12", features = ["with-axum", "markdown"] }
 askama_axum = "0.4"

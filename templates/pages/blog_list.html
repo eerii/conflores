@@ -6,6 +6,9 @@
 <div>
     <style>
         this {
+            display: flex;
+            flex-direction: column;
+
             text-align: center;
             width: 100%;
         }
@@ -17,8 +20,11 @@
             margin-top: 2rem;
         }
     </style>
-    {% for (name, slug) in articles %}
-    <a href="/blog/{{ slug }}">{{name}}</a>
+    {% for (slug, data) in articles %}
+    <div>
+        <a href="/blog/{{ slug }}">{{data.title}}</a>
+        <p>{{data.published.unwrap()}}</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
