@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::time::Duration;
 
 use askama::Template;
@@ -53,19 +52,22 @@ const BLOG_PATH: &str = "assets/blog";
 #[derive(Template)]
 #[template(path = "pages/blog_list.html")]
 pub struct TemplateBlogList {
-    articles: HashMap<String, BlogPostData>,
+    articles: Vec<(String, BlogPostData)>,
 }
 
 pub async fn blog_list() -> TemplateBlogList {
-    let mut articles = HashMap::new();
+    let mut articles = vec![];
 
     // Gets the article list from the blog folder
     let Ok(dir) = std::fs::read_dir(BLOG_PATH) else {
         return TemplateBlogList { articles };
     };
 
+    let mut dir: Vec<_> = dir.filter_map(|d| d.ok()).collect();
+    dir.sort_by_key(|d| d.file_name().into_string().unwrap_or_default());
+    dir.reverse();
+
     for d in dir {
-        let Ok(d) = d else { continue };
         let Ok(name) = d.file_name().into_string() else {
             continue;
         };
@@ -88,7 +90,7 @@ pub async fn blog_list() -> TemplateBlogList {
             }
 
             let slug = name.trim_end_matches(".md").to_string();
-            articles.insert(slug, matter.deserialize().unwrap_or_default());
+            articles.push((slug, matter.deserialize().unwrap_or_default()));
         }
     }
 
