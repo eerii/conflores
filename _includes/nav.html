@@ -1,0 +1,16 @@
+<nav>
+    <a href="{{ site.url }}" class="logo">
+        <span>{{ page.title }}</span>
+        {% if page.title != site.title_alt %}
+            <span>{{ site.title_alt }}</span>
+        {% endif %}
+    </a>
+
+    <span class="fill"></span>
+
+    <span class="nav-links row fixed">
+        {% for link in site.nav_links %}
+            <a href="{{ link[1] }}">{{ link[0] }}</a>
+        {% endfor %}
+    </span>
+</nav>

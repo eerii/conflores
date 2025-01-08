@@ -1,7 +1,8 @@
 ---
-title = "Halfway point"
-published = 2024-07-08
-tags = ["outreachy"]
+layout: post
+title: "halfway point"
+date: 2024-07-08
+categories: [outreachy, servo]
 ---
 
 This arrived faster than I expected, but we are already at the halfway point of the Outreachy internship! These past few weeks I have learned a lot, faced some unexpected issues and tackled problems I didn't expect. Let me take you through them!

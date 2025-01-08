@@ -1,12 +1,11 @@
 ---
-title = "An introduction"
-published = 2024-06-02
-tags = ["outreachy"]
+layout: post
+title: "an introduction"
+date: 2024-06-02
+categories: [outreachy, servo]
 ---
 
-Hi!
-
-My name is Eri, and I’m passionate about programming and free software. I’m from Galicia, a small coastal state in northern Spain, where I study Computer Science. I really enjoy cooking plant-based food as well as playing (and making!) video games in my free time. I’m also proudly non-binary and I use they/them pronouns.
+Hi! My name is Eri, and I’m passionate about programming and free software. I’m from Galicia, a small coastal state in northern Spain, where I study Computer Science. I really enjoy cooking plant-based food as well as playing (and making!) video games in my free time. I’m also proudly non-binary and I use they/them pronouns.
 
 This blog will tell my journey as a new [Outreachy](https://www.outreachy.org/) open source intern working on [Servo](https://servo.org/), a very cool next generation, modular, embeddable and memory safe web engine written in Rust. This is my first time participating on anything like this, but I’m certain that I’m going to learn so much, and I can’t wait to share it all with you.
 
