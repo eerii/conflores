@@ -1,21 +1,15 @@
 # conflores 🌼
 
+A tiny technical blog.
+
 ## run locally ❄️
 
-Using the provided nix flake, enter the development environment:
-
 ```sh
+# Use the nix development shell
 nix develop
-# or using direnv
+# Or configure direnv so it does it automatically
 echo "use flake" > .envrc
 direnv allow
-
-bundle-setup
-```
-
-For updates:
-
-```sh
-bundle-update # Create and update Gemfile.lock
-bundix # Create gemset.nix
+# Open the site
+jekyll serve
 ```

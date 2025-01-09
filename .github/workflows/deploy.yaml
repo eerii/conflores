@@ -21,15 +21,6 @@ jobs:
           primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix') }}
           restore-prefixes-first-match: nix-${{ runner.os }}-
 
-      - name: Cache Ruby 💎
-        id: cache-ruby
-        uses: actions/cache@v3
-        with:
-          path: ./vendor/bundle
-          key: ${{ runner.os }}-ruby-${{ hashFiles('gemset.nix') }}
-          restore-keys: |
-            ${{ runner.os }}-ruby-
-
       - name: Use Nix flake 🐙
         uses: nicknovitski/nix-develop@v1
 

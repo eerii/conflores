@@ -206,12 +206,21 @@ footer {
     .nav-next:before {
         content: "←";
         display: block;
+        @media (width < 768px) {
+            width: 3rem;
+            float: left;
+        }
     }
 
     .nav-prev:before {
         content: "→";
         display: block;
         text-align: right;
+
+        @media (width < 768px) {
+            width: 3rem;
+            float: right;
+        }
     }
 }
 

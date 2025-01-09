@@ -3,7 +3,7 @@ title: conflores
 title_alt: c✿nflores
 description: >-
   Not sure what to write here yet
-url: "https://blog.conflor.es"
+url: "https://conflor.es"
 
 # Contact info
 email: eri@inventati.org
@@ -23,12 +23,13 @@ plugins:
 
 # Theme config
 nav_links:
-  about: /about
+  # TODO: Write actual about page
+  about: https://www.linkedin.com/in/eripazosperez
   code: https://github.com/eerii
 collections:
   my_tags:
     output: true
-    permalink: /tagged/:slug/
+    permalink: /tagged/:slug
 defaults:
   -
     scope:
