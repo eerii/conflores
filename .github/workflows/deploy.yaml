@@ -25,12 +25,12 @@ jobs:
         uses: nicknovitski/nix-develop@v1
 
       - name: Build 📦
-        run: jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
+        run: soupault
 
       - name: Save artifacts 💽
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/
 
   deploy:
     runs-on: ubuntu-latest

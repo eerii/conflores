@@ -1,9 +1,10 @@
----
-layout: post
-title: "halfway point"
-date: 2024-07-08
-categories: [outreachy, servo]
----
+# halfway point
+
+<post-meta>
+    <time id="post-date">2024-07-08</time>
+    <post-tag>outreachy</post-tag>
+    <post-tag>servo</post-tag>
+</post-meta>
 
 This arrived faster than I expected, but we are already at the halfway point of the Outreachy internship! These past few weeks I have learned a lot, faced some unexpected issues and tackled problems I didn't expect. Let me take you through them!
 
@@ -31,7 +32,7 @@ After that, the hard work began. I was a bit intimidated at this point, since no
 
 Up until this point everything about the DevTools inspecting was still broken, so even if I was making changes they had no use yet. That's why at this point I decided to tackle the `Console` actor. This is what I would put under _step 4_, so one can see how the initial plan was not representative of what I actually needed to do. Now that the console [is finished](https://github.com/servo/servo/pull/32727) (yay!) you can see page logs, send messages and even evaluate JavaScript on it!
 
-![Console features](https://github.com/servo/servo/assets/22449369/b5ddd302-cfbd-4dfc-b96d-c1175840e692)
+![Console features](/images/2024/halfway-console.png)
 
 Next up is tackling the actual document tree inspector, so that contributors can see the layout of the page interactively as you are testing things.
 

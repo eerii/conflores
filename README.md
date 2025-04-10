@@ -11,5 +11,13 @@ nix develop
 echo "use flake" > .envrc
 direnv allow
 # Open the site
-jekyll serve
+just dev
 ```
+
+
+## todo
+
+- implement wcag accessibility guidelines
+- rework styling
+    - grid layout columns from css talk
+- write about migration

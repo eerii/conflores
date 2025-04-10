@@ -1,9 +1,10 @@
----
-layout: post
-title: "an introduction"
-date: 2024-06-02
-categories: [outreachy, servo]
----
+# an introduction
+
+<post-meta>
+    <time id="post-date">2024-06-02</time>
+    <post-tag>outreachy</post-tag>
+    <post-tag>servo</post-tag>
+</post-meta>
 
 Hi! My name is Eri, and I’m passionate about programming and free software. I’m from Galicia, a small coastal state in northern Spain, where I study Computer Science. I really enjoy cooking plant-based food as well as playing (and making!) video games in my free time. I’m also proudly non-binary and I use they/them pronouns.
 

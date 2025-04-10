@@ -1,9 +1,10 @@
----
-layout: post
-title: "reviving the devtools support in servo"
-date: 2024-09-20
-categories: [outreachy, servo]
----
+# reviving the devtools support in servo
+
+<post-meta>
+    <time id="post-date">2024-09-20</time>
+    <post-tag>outreachy</post-tag>
+    <post-tag>servo</post-tag>
+</post-meta>
 
 This blog post was written for the [Servo blog](https://servo.org/blog/2024/09/20/devtools) in collaboration with [@delan](https://github.com/delan) and [@mrobinson](https://github.com/mrobinson).
 It highlights improvements made to the devtools support, including inspecting the DOM tree, viewing styles, evaluating JavaScript, and reading console messages.
@@ -12,7 +13,7 @@ It highlights improvements made to the devtools support, including inspecting th
 
 Servo has been working on improving our [Firefox devtools](https://firefox-source-docs.mozilla.org/devtools-user) support as part of the [Outreachy](https://www.outreachy.org) internship program since June, and we're thrilled to share significant progress.
 
-![The HTML and CSS inspector is able to display the DOM elements and their attributes and CSS properties.](/assets/images/2024/devtools-inspector.png)
+![The HTML and CSS inspector is able to display the DOM elements and their attributes and CSS properties.](/images/2024/devtools-inspector.png)
 
 Devtools are a set of **browser web developer tools** that allows you to examine, edit, and debug HTML, CSS, and JavaScript.
 Servo leverages existing work from the Firefox devtools to inspect its own websites, employing the same open protocol that is used for connecting to other Firefox instances.
@@ -32,7 +33,7 @@ To facilitate this, we made a helper script ([@eerii](https://github.com/eerii),
 
 **Support for the console** was fixed, enabling the execution of JavaScript code directly in Servo's webviews and displaying any warnings or errors that the page emits ([@eerii](https://github.com/eerii), [@mrobinson](https://github.com/mrobinson), [#32727](https://github.com/servo/servo/pull/32727)).
 
-![The JavaScript developer console now displays page logs. It can also run commands.](/assets/images/2024/devtools-console.png)
+![The JavaScript developer console now displays page logs. It can also run commands.](/images/2024/devtools-console.png)
 
 Finally, the most significant changes involved the **DOM inspector**.
 Tighter integration with Servo's script module was required to retrieve the properties of each element.

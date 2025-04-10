@@ -2,12 +2,5 @@
 .env
 .cache
 .cargo
-.prettier*
 .direnv
-.prev
-/target
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
-vendor
+build
