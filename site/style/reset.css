@@ -1,0 +1,73 @@
+/* Better box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins */
+* {
+  margin: 0;
+}
+
+:root {
+  /* Accessible font and line sizing */
+  font-size: round(down, calc(15px + 0.390625vw), 1px);
+  line-height: calc(1em + 0.5rem);
+  /* WebKit settings */
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  /* Smooth scroll */
+  scroll-behavior: smooth;
+}
+
+/* Full page document */
+body {
+  min-height: 100vh;
+}
+
+/* Avoid inline images by default */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Avoid zoom and scroll issues */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Allow styled buttons in WebKit */
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+}
+
+/* Improved wrapping */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* Styles */
+b, strong {
+  font-weight: bolder;
+}
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Remove default padding to avoid confusion */
+legend {
+  padding: 0;
+}
+
+/* Better stacking without worrying about z-index */
+#root, #__next {
+  isolation: isolate;
+}

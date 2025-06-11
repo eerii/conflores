@@ -19,5 +19,6 @@ just dev
 
 - implement wcag accessibility guidelines
 - rework styling
-    - grid layout columns from css talk
+    - [grid layout columns from css talk](https://layout-breakouts-builder.vercel.app/)
+- [rss feed](https://github.com/PataphysicalSociety/soupault.app/blob/main/plugins/atom.lua)
 - write about migration
