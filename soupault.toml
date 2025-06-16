@@ -1,7 +1,7 @@
 [settings]
 # Soupault version that the config was written/generated for
 # Trying to process this config with an older version will result in an error message
-soupault_version = "4.11.0"
+soupault_version = "5.0.0"
 
 # Stop on page processing errors?
 strict = true
@@ -27,6 +27,12 @@ build_dir = "build"
 # Note that for formats other than HTML, you need to specify an external program
 # for converting them to HTML (see below).
 page_file_extensions = ["html", "md"]
+
+# Soupault has built-in support for CommonMark
+# If you use Markdown and want to use the built-in parser,
+# use this option to specify file extensions
+# that you want to be interpreted as Markdown files.
+markdown_extensions = ["md"]
 
 # By default, soupault uses "clean URLs",
 # that is, $site_dir/page.html is converted to $build_dir/page/index.html
@@ -98,12 +104,6 @@ cache_dir = ".cache"
 page_character_encoding = "utf-8"
 
 
-# It is possible to store pages in any format if you have a program
-# that converts it to HTML and writes it to standard output.
-[preprocessors]
-md = "cmark --unsafe --smart"
-
-
 # The content model specifies the fields, similar to front matter
 [index]
 index = true
@@ -127,19 +127,19 @@ reading_time = { selector = "#reading-time" }
 index_selector = "#blog-index"
 section = "blog/"
 index_item_template = """
-<div class="blog-index-element">
-    <span>
-        <h2><a href="{{url}}">{{title}}</a></h2>
-        <span class="fill"></span>
-        <strong>{{date}}</strong>
-    </span>
-    <p>{{excerpt}}</p>
-    <span>
-        <a href="{{url}}">Read more</a>
-        <span class="fill"></span>
-        {% for tag in tags %}<span>{{tag}}</span>{% endfor %}
-    </span>
-</div>
+<article class="blog-index-element column">
+  <header class="row">
+    <h2><a href="{{url}}">{{title}}</a></h2>
+    <span class="fill"></span>
+    <strong>{{date}}</strong>
+  </header>
+  <p>{{excerpt}}</p>
+  <span class="row">
+    <a href="{{url}}">Read more</a>
+    <span class="fill"></span>
+    {% for tag in tags %}<span>{{tag}}</span>{% endfor %}
+  </span>
+</article>
 """
 
 
