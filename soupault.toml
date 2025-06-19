@@ -104,6 +104,14 @@ cache_dir = ".cache"
 page_character_encoding = "utf-8"
 
 
+# Custom options that aren't built-ins
+[custom_options]
+site_url = "https://conflor.es"
+site_author = "Eri Pazos Pérez"
+site_author_email = "eri@igalia.com"
+site_title = "conflores"
+
+
 # The content model specifies the fields, similar to front matter
 [index]
 index = true
@@ -112,6 +120,7 @@ sort_descending = true
 sort_type = "calendar"
 date_formats = ["%F"]
 leaf_file = ".leaf"
+strip_tags = true
 
 # These are the fields we extract directly from the HTML content to
 # use as metadata
@@ -151,7 +160,6 @@ widget = "include"
 file = "templates/header.html"
 selector = "body"
 action = "prepend_child"
-
 [widgets.insert-footer]
 widget = "include"
 file = "templates/footer.html"
@@ -176,3 +184,9 @@ append = " &mdash; conflores"
 # heading_links = true
 # heading_link_text = "→ "
 # use_heading_slug = true
+
+# RSS Feed
+[widgets.atom]
+widget = "atom"
+feed_file = "atom.xml"
+use_section = "blog"
