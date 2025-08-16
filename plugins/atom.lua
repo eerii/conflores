@@ -38,7 +38,9 @@ end
 
 function tags_match(entry)
 	if config["use_tag"] then
-		return (Regex.match(entry["tags"], format("\\b%s\\b", config["use_tag"])))
+		local tags = Table.get_key_default(entry, "tags", {})
+		local str = String.join(" ", tags)
+		return (Regex.match(str, format("\\b%s\\b", config["use_tag"])))
 	else
 		return 1
 	end

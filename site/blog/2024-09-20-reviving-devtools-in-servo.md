@@ -4,6 +4,7 @@
     <time id="post-date">2024-09-20</time>
     <post-tag>outreachy</post-tag>
     <post-tag>servo</post-tag>
+    <post-tag>web-platform</post-tag>
 </post-meta>
 
 This blog post was written for the [Servo blog](https://servo.org/blog/2024/09/20/devtools) in collaboration with [@delan](https://github.com/delan) and [@mrobinson](https://github.com/mrobinson).

@@ -1,7 +1,7 @@
 [settings]
 # Soupault version that the config was written/generated for
 # Trying to process this config with an older version will result in an error message
-soupault_version = "5.0.0"
+soupault_version = "5.1.0"
 
 # Stop on page processing errors?
 strict = true
@@ -190,3 +190,9 @@ append = " &mdash; conflores"
 widget = "atom"
 feed_file = "atom.xml"
 use_section = "blog"
+
+[widgets.atom-web-platform]
+widget = "atom"
+feed_file = "web-platform.xml"
+use_section = "blog"
+use_tag = "web-platform"
