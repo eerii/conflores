@@ -3,9 +3,6 @@
 # Trying to process this config with an older version will result in an error message
 soupault_version = "5.1.0"
 
-# Stop on page processing errors?
-strict = true
-
 # Display progress?
 verbose = true
 
@@ -114,34 +111,40 @@ site_title = "conflores"
 
 # The content model specifies the fields, similar to front matter
 [index]
-index = true
 sort_by = "date"
 sort_descending = true
 sort_type = "calendar"
 date_formats = ["%F"]
 leaf_file = ".leaf"
-strip_tags = true
+extract_after_widgets = ["post-header"]
 
 # These are the fields we extract directly from the HTML content to
 # use as metadata
 [index.fields]
-title = { selector = ["h1#post-title", "h1"] }
+title = { selector = ["h1#post-title", "h1"], required = true }
+content = { selector = ["main"], required = true }
 excerpt = { selector = ["#post-excerpt", "p"] }
-date = { selector = ["#post-date", "time"] }
-tags = { selector = "post-tag", select_all = true }
-reading_time = { selector = "#reading-time" }
+date = { selector = ["#post-date", "time"], required = true }
+tags = { selector = "#post-tags > span", select_all = true }
+images = { selector = "img:not(.no-index)", extract_attribute = "src", select_all = true }
+images_alt = { selector = "img:not(.no-index)", extract_attribute = "alt", select_all = true }
 
 # Finally, we can create an index view to show all of the blog posts
 [index.views.blog]
 index_selector = "#blog-index"
 section = "blog/"
 index_item_template = """
-<article class="blog-index-element column">
+<article class="column blog-index-element {% if "short" in tags %}blog-index-short{% endif %}">
   <header class="row">
     <h2><a href="{{url}}">{{title}}</a></h2>
     <span class="fill"></span>
     <strong>{{date}}</strong>
   </header>
+  {% if images %}
+    <div class="blog-index-imgs">
+      {% for src in images %}<img src="{{src}}" alt="{{images_alt[loop.index-1]}}"/>{% endfor %}
+    </div>
+  {% endif %}
   <p>{{excerpt}}</p>
   <span class="row">
     <a href="{{url}}">Read more</a>
@@ -160,6 +163,7 @@ widget = "include"
 file = "templates/header.html"
 selector = "body"
 action = "prepend_child"
+
 [widgets.insert-footer]
 widget = "include"
 file = "templates/footer.html"
@@ -169,9 +173,28 @@ action = "append_child"
 # Page title
 [widgets.page-title]
 widget = "title"
-selector = ["h1"]
+selector = "h1"
 default = "conflores"
 append = " &mdash; conflores"
+
+# Post header
+[widgets.post-header]
+widget = "post-header"
+selector = "h1"
+
+# RSS Feed
+[widgets.atom]
+page = "index.html"
+widget = "atom"
+feed_file = "atom.xml"
+use_section = "blog"
+
+[widgets.atom-web-platform]
+page = "index.html"
+widget = "atom"
+feed_file = "web-platform.xml"
+use_section = "blog"
+use_tag = "web-platform"
 
 # Table of contents
 # [widgets.table-of-contents]
@@ -184,15 +207,3 @@ append = " &mdash; conflores"
 # heading_links = true
 # heading_link_text = "→ "
 # use_heading_slug = true
-
-# RSS Feed
-[widgets.atom]
-widget = "atom"
-feed_file = "atom.xml"
-use_section = "blog"
-
-[widgets.atom-web-platform]
-widget = "atom"
-feed_file = "web-platform.xml"
-use_section = "blog"
-use_tag = "web-platform"

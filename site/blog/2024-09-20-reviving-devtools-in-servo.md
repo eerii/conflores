@@ -1,12 +1,5 @@
 # reviving the devtools support in servo
 
-<post-meta>
-    <time id="post-date">2024-09-20</time>
-    <post-tag>outreachy</post-tag>
-    <post-tag>servo</post-tag>
-    <post-tag>web-platform</post-tag>
-</post-meta>
-
 This blog post was written for the [Servo blog](https://servo.org/blog/2024/09/20/devtools) in collaboration with [@delan](https://github.com/delan) and [@mrobinson](https://github.com/mrobinson).
 It highlights improvements made to the devtools support, including inspecting the DOM tree, viewing styles, evaluating JavaScript, and reading console messages.
 
@@ -51,3 +44,9 @@ For a step-by-step guide on how to use Servo’s devtools, check out the new [de
 We'd love to hear your feedback on how these work and what additional features you'd find helpful in your workflow.
 
 Many thanks to Outreachy for the internship that made this possible!
+
+<div id="post-tags">
+  <span>outreachy</span>
+  <span>servo</span>
+  <span>web-platform</span>
+</div>

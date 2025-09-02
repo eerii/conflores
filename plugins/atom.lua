@@ -1,15 +1,11 @@
 -- Atom feed generator
 -- From https://github.com/PataphysicalSociety/soupault-blueprints-blog/blob/main/plugins/atom.lua
 
-Plugin.require_version("4.0.0")
-
 data = {}
 
 date_input_formats = soupault_config["index"]["date_formats"]
-
-feed_file = config["feed_file"]
-
 custom_options = soupault_config["custom_options"]
+feed_file = config["feed_file"]
 
 if not Table.has_key(custom_options, "site_url") then
 	Plugin.exit(
@@ -23,9 +19,7 @@ end
 
 data["site_url"] = custom_options["site_url"]
 data["feed_id"] = Sys.join_path(custom_options["site_url"], feed_file)
-
 data["soupault_version"] = Plugin.soupault_version()
-
 data["feed_author"] = custom_options["site_author"]
 data["feed_author_email"] = custom_options["site_author_email"]
 data["feed_title"] = custom_options["site_title"]
@@ -94,8 +88,8 @@ feed_template = [[
     <title>{{e.title}}</title>
     <updated>{{e.date}}</updated>
     <content type="html">
-    {{e.excerpt | escape}}
-    </content>
+{{e.content | escape}}
+		</content>
     <link href="{{site_url}}{{e.url}}" rel="alternate"/>
   </entry>
   {% endfor %}

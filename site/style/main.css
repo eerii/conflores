@@ -8,7 +8,7 @@
   --font-special: "Clash", sans-serif;
 
   --fg: #000000;
-  --bg: #f0ede9;
+  --bg: #ffffff;
   --accent: #3a6343;
 
   --spacing: 1.2rem;
@@ -20,7 +20,6 @@
   background-color: var(--bg);
 
   font-family: var(--font);
-  text-align: justify;
 
   padding: 0 var(--spacing);
   scroll-behavior: smooth;
@@ -45,6 +44,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+p {
+  text-align: justify;
+}
+
 a {
   color: var(--accent);
   background: linear-gradient(currentColor 0 0) bottom left / var(
@@ -65,6 +68,19 @@ ul {
   list-style-type: none;
 }
 
+blockquote {
+  padding-left: var(--spacing);
+  border-left: 4px solid var(--accent);
+}
+
+pre {
+  padding: var(--spacing);
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  background-color: var(--fg);
+  color: var(--bg);
+}
+
 /* Custom classes */
 
 .content > * {
@@ -79,6 +95,7 @@ ul {
 
   &:not(.fixed) {
     @media (width < 768px) {
+      text-align: center;
       flex-direction: column;
       gap: 0;
     }
@@ -96,31 +113,12 @@ ul {
   flex-grow: 1;
 }
 
-post-meta {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: var(--spacing);
-}
-
-post-tag {
-  border: solid calc(var(--line-width) * 2) var(--fg);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.25rem;
-}
-
-post-meta > time {
-  flex-grow: 1;
-}
-
 div.highlight {
   padding: var(--spacing);
   background-color: hsl(from var(--bg) h s 90%);
 }
 
-img, div.highlight {
+img, pre, div.highlight {
   border: var(--line-width) solid var(--accent);
   border-radius: 0.25rem;
   margin-left: auto;
@@ -188,25 +186,39 @@ footer {
   font-weight: bolder;
 }
 
-/* Posts */
+/* Blog index */
 
-#blog-index {
-  gap: calc(var(--spacing) * 2);
+.blog-index-element {
+  gap: calc(var(--spacing) * 0.5);
 }
 
-.blog-index-element > p {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0.3)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* .blog-index-short { */
+  /* display: none; */
+/* } */
+
+.blog-index-imgs {
+  img {
+    display: inline;
+    height: 8rem;
+    margin-right: calc(var(--spacing) * 0.5);
+  }
 }
 
-post-meta ~ p {
+/* Blog post */
+
+main > p, main > pre {
   margin: var(--spacing) 0;
+}
+
+#post-tags > span {
+  border: solid calc(var(--line-width) * 2) var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  &::before {
+    content: "#";
+  }
 }
 
 /* Transitions */

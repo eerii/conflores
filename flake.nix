@@ -20,6 +20,7 @@
               live-server
               watchexec
               just
+              imagemagick
             ];
           };
         }
