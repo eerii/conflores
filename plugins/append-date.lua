@@ -7,20 +7,15 @@ if not selector then
 	selector = "h1"
 end
 
-function wrap_title(d)
-	wrapper = HTML.create_element("div")
-	HTML.add_class(wrapper, "post-title")
-	wrap = HTML.wrap(title, wrapper)
-
-	time = HTML.create_element("time", d)
-	HTML.append_child(wrapper, time)
-
-	-- modify = get_file_modification_date(page_file)
+function append_date(date)
+	date_element = HTML.create_element("time", date)
+	HTML.add_class(date_element, "post-date")
+	HTML.insert_after(title_element, date_element)
 end
 
 print(page_file)
 if String.starts_with(page_file, "site/blog") then
-	title = HTML.select_one(page, selector)
+	title_element = HTML.select_one(page, selector)
 	date = Regex.find_all(page_file, "(\\d{4}-\\d{2}-\\d{2})")
-	Table.iter_values(wrap_title, date)
+	Table.iter_values(append_date, date)
 end

@@ -1,4 +1,4 @@
-# churuleto said no more work
+# churuleto likes to lay down _everywhere_
 
 I had to add a keybind that locks the keyboard...
 
@@ -6,7 +6,5 @@ I had to add a keybind that locks the keyboard...
 
 ![Churuleto on top of the sofa hugging the pillows](/images/2025/churuleto-sofa-abrazo.webp)
 
-<div id="post-tags">
-  <span>short</span>
-  <span>churuleto</span>
-</div>
+<tag>micro</tag>
+<tag>churuleto</tag>

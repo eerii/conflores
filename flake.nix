@@ -21,6 +21,7 @@
               watchexec
               just
               imagemagick
+              highlight
             ];
           };
         }

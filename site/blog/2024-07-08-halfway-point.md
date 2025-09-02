@@ -32,7 +32,5 @@ Next up is tackling the actual document tree inspector, so that contributors can
 
 One of the most important things I have learned is that even if it is great to have an initial plan, you have to be ready to adapt it to the circumstances and everything you discover along the way. I can't wait to share more with you on my next blog!
 
-<div id="post-tags">
-  <span>outreachy</span>
-  <span>servo</span>
-</div>
+<tag>outreachy</tag>
+<tag>servo</tag>

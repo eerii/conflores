@@ -45,8 +45,6 @@ We'd love to hear your feedback on how these work and what additional features y
 
 Many thanks to Outreachy for the internship that made this possible!
 
-<div id="post-tags">
-  <span>outreachy</span>
-  <span>servo</span>
-  <span>web-platform</span>
-</div>
+<tag>outreachy</tag>
+<tag>servo</tag>
+<tag>web-platform</tag>
