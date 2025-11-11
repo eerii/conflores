@@ -1,6 +1,6 @@
 # conflores 🌼
 
-A tiny technical blog.
+a tiny technical blog.
 
 ## run locally ❄️
 
@@ -16,7 +16,14 @@ just dev
 
 ## todo
 
+- add made with soupault, works with open web
 - implement wcag accessibility guidelines
 - rework styling
     - [grid layout columns from css talk](https://layout-breakouts-builder.vercel.app/)
-- write about migration
+    - better responsive mode
+    - more appropiate sizing
+    - add fun things to the website
+    - improve colors and slightly bigger palette
+- add filters on top (no notes, only some tags, ...)
+- write about indie web
+- write about migration and accessibility

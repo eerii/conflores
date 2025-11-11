@@ -7,11 +7,11 @@ site_dir = "site"
 build_dir = "build"
 page_file_extensions = ["html", "md"]
 markdown_extensions = ["md"]
-ignore_extensions = ["draft"]
 
 default_template_file = "templates/main.html"
 default_content_selector = "main"
 default_content_action = "append_child"
+pretty_print_html = false
 
 plugin_discovery = true
 plugin_dirs = ["plugins"]
@@ -23,7 +23,7 @@ cache_dir = ".cache"
 # Extra options
 [custom_options]
 site_url = "https://conflor.es"
-site_author = "Eri"
+site_author = "eri"
 site_author_email = "eri@igalia.com"
 site_title = "conflores"
 
@@ -43,15 +43,15 @@ sort_descending = true
 sort_type = "calendar"
 date_formats = ["%F"]
 leaf_file = ".leaf"
-extract_after_widgets = ["append-date"]
+extract_after_widgets = ["set-metadata"]
 dump_json = "index.json"
 
 # Fields extracted from HTML to use as metadata
 [index.fields]
-title = { selector = ["#post-title", "h1"], required = true }
-content = { selector = ["main"], required = true }
-date = { selector = ["#post-date", "time"], required = true }
-excerpt = { selector = ["#post-excerpt", "p"], strip_tags = true }
+title = { selector = [".p-name"] }
+content = { selector = [".h-entry"] }
+date = { selector = [".dt-published"] }
+summary = { selector = [".p-summary", "p"], strip_tags = true }
 tags = { selector = "tag", select_all = true }
 images = { selector = "img:not(.no-index)", extract_attribute = "src", select_all = true }
 images_alt = { selector = "img:not(.no-index)", extract_attribute = "alt", select_all = true }
@@ -63,22 +63,23 @@ index_template = """
 {% set flower = ["✿","❋","✾","❁","❀","✽","❃","❊"] | random %}
 {% set state = namespace(i = 0) %}
 {% for e in entries %}
-  <article class="blog-index-element {% if "micro" in e.tags %}blog-index-micro{% endif %}">
+  <article class="h-entry blog-index-element {% if "note" in e.tags %}blog-index-note{% endif %}">
     {% set state.i += 1 %}
-    <header>
-      <h2><a href="{{e.url}}">{{e.title}}<span>{{flower[state.i % 9]}}</span></a></h2>
-    </header>
-    <div class="row">
-      <strong>{{e.date}}</strong>
-      {% for tag in e.tags|sort %}<tag>{{tag}}</tag>{% endfor %}
-    </div>
+    {% if e.title %}
+      <header>
+        <h2><a class="p-name" href="{{e.url}}">{{e.title}}</a> <span>{{flower[state.i % 9]}}</span></h2>
+      </header>
+    {% endif%}
     {% if e.images %}
       <div class="blog-index-imgs">
         {% for src in e.images %}<img src="{{src}}" alt="{{e.images_alt[loop.index-1]}}"/>{% endfor %}
       </div>
     {% endif %}
-    <p>{{e.excerpt}}</p>
-    <p class="blog-index-read-more"><a href="{{e.url}}">read more</a></p>
+    <p class="p-summary">{{e.summary}}</p>
+    <div class="row">
+      <strong><a class="u-url dt-published" href="{{e.url}}">{{e.date}}</a></strong>
+      {% for tag in e.tags|sort %}<tag class="p-category">{{tag}}</tag>{% endfor %}
+    </div>
   </article>
 {% endfor %}
 """
@@ -109,8 +110,8 @@ selector = "body"
 action = "append_child"
 
 # Post header
-[widgets.append-date]
-widget = "append-date"
+[widgets.set-metadata]
+widget = "set-metadata"
 selector = "h1"
 
 # Move style to the head
@@ -141,7 +142,7 @@ use_tag = "web-platform"
 # Table of contents
 [widgets.table-of-contents]
 widget = "toc"
-selector = ".post-date"
+selector = ".dt-published"
 action = "insert_after"
 exclude_page = "index.html"
 min_level = 2

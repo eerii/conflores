@@ -1,5 +1,5 @@
 dev:
-    watchexec -e css,html,md,toml soupault &
+    watchexec -e css,html,md,toml,lua soupault &
     cd build && live-server -p 6969 -o
 
 build:
