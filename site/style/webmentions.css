@@ -1,0 +1,62 @@
+#webmentions {
+  margin: 0;
+  position: relative;
+  z-index: 100;
+  line-height: 1.2em;
+}
+
+#webmentions ul {
+  padding: 0;
+}
+
+#webmentions .reacts {
+  flex-flow: row wrap;
+}
+
+#webmentions img {
+  display: inline;
+}
+
+#webmentions .comments {
+  max-height: 20em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 80%;
+}
+
+#webmentions h2 {
+  font-size: 1rem;
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+#webmentions .reacts img {
+  margin: 3px -1ex 1px 0;
+}
+
+#webmentions img.missing {
+  background: var(--accent);
+}
+
+#webmentions a.reaction {
+  margin-right: 1ex;
+}
+
+#webmentions a.reaction img {
+  max-height: 1.5rem;
+  margin-right: -1ex;
+}
+
+#webmentions a.reaction sub {
+  font-size: 50%;
+}
+
+#webmentions .comments li {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#webmentions .comments li .text {
+  font-style: italic;
+}

@@ -1,6 +1,6 @@
 /* Blog post */
 
-.e-content > p, .e-content > pre, main > .toc {
+.e-content > p, .e-content > pre, .e-content > section, main > .toc {
   margin: var(--spacing) 0;
 }
 
@@ -66,4 +66,8 @@ tag {
     height: 8rem;
     margin-right: calc(var(--spacing) * 0.5);
   }
+}
+
+section[role=doc-endnotes] p {
+  display: inline;
 }

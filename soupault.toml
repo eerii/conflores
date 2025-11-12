@@ -109,10 +109,14 @@ file = "templates/footer.html"
 selector = "body"
 action = "append_child"
 
-# Post header
+# Metadata
 [widgets.set-metadata]
 widget = "set-metadata"
 selector = "h1"
+
+# Tag photos
+[widgets.tag-photos]
+widget = "tag-photos"
 
 # Move style to the head
 [widgets.inline-style]
