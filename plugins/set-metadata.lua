@@ -37,6 +37,7 @@ function set_date(date)
 	HTML.add_class(date_element, "dt-published")
 	HTML.insert_before(content_element, date_element)
 end
+
 Table.iter_values(set_date, date)
 
 -- Summary
@@ -51,21 +52,31 @@ tags = HTML.select(page, "tag")
 function set_category(tag)
 	HTML.add_class(tag, "p-category")
 end
+
 Table.iter_values(set_category, tags)
 
+-- Fediverse
+syndicated = HTML.select(page, "syn")
+function set_fedi(syn)
+	url = HTML.inner_html(syn)
+	syn_element = HTML.create_element("a", "view in mastodon")
+	HTML.append_attribute(syn_element, "href", url)
+	HTML.add_class(syn_element, "u-syndication")
+	HTML.replace_element(syn, syn_element)
+end
+
+Table.iter_values(set_fedi, syndicated)
+
 -- Other information
-info_element = HTML.create_element("div", "")
-HTML.append_attribute(info_element, "hidden", "")
+metadata_element = HTML.select_one(page, "#metadata")
 
 url_element = HTML.create_element("a", page_url)
 HTML.append_attribute(url_element, "href", page_url)
 HTML.add_class(url_element, "u-url")
-HTML.append_child(info_element, url_element)
+HTML.append_child(metadata_element, url_element)
 
 author_element = HTML.create_element("a", site_author)
 HTML.append_attribute(author_element, "href", site_url)
 HTML.append_attribute(author_element, "rel", "author")
 HTML.add_class(author_element, "p-author")
-HTML.append_child(info_element, author_element)
-
-HTML.append_child(entry_element, info_element)
+HTML.append_child(metadata_element, author_element)

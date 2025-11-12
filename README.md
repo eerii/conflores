@@ -24,6 +24,7 @@ just dev
     - more appropiate sizing
     - add fun things to the website
     - improve colors and slightly bigger palette
+    - webmentions styling
 - add filters on top (no notes, only some tags, ...)
 - write about indie web
 - write about migration and accessibility
