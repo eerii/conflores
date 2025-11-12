@@ -1,0 +1,31 @@
+---
+layout: main
+main_class: h-entry column
+tags: []
+---
+<script src="/script/webmention.min.js" async=""></script>
+
+<h1 class="p-name">{{ title }}</h1>
+<time class="dt-published">{{ page.date.toDateString() }}</time>
+
+<article class="e-content">
+  {{ content }}
+</article>
+
+<ul class="tag-list">
+  {{ for tag of tags }}
+    <li class="p-category">{{ tag }}</li>
+  {{ /for }}
+</ul>
+
+<div class="fill"></div>
+
+<div class="metadata" hidden>
+  {{ if mastodon }}
+    <a class="u-syndicaton" href="{{ mastodon |> url }}">mastodon</a>
+  {{ /if }}
+  <a class="u-url" href="{{ page.url |> url }}">{{ site.title }}</a>
+  <a class="p-author" rel="author" href="{{ page.url |> url }}">eri</a>
+</div>
+
+<div id="webmentions"></div>

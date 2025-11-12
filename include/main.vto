@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="{{ eleventy.generator }}">
+
+    <title>{{ site.title + (title ? " - " + title : "") }}</title>
+    <meta name="description" content="{{ site.description }}">
+
+    <!-- Indie Web -->
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+    <link rel="webmention" href="https://webmention.io/conflor.es/webmention">
+    <script src="/script/webmention.min.js" async></script>
+
+    <link rel="stylesheet" href="/style/main.css">
+  </head>
+  <body>
+    {{ include "header.vto" }}
+    {{ if before }}{{ vto { collections } }}{{ before }}{{ /vto }}{{ /if }}
+    <main {{ if main_class }}class="{{ main_class }}"{{ /if }}>
+      {{ content }}
+    </main>
+    {{ include "footer.vto" }}
+  </body>
+</html>

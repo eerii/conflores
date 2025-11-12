@@ -1,0 +1,94 @@
+/* TODO: Rework all of the styles */
+
+:root {
+  --font: "Inter", sans-serif;
+  --font-special: "Clash", sans-serif;
+
+  --fg: #000000;
+  --bg: #ffffff;
+  --accent: #3a6343;
+
+  --spacing: 1.2rem;
+  --line-width: 0.1em;
+  --trans-time: 200ms;
+
+  color: var(--fg);
+  accent-color: var(--accent);
+  background: linear-gradient(
+    to bottom,
+    var(--bg),
+    hsl(from var(--bg) 80 20 calc(l - 6))
+  );
+  background-attachment: fixed;
+
+  font-family: var(--font);
+
+  padding: 0 var(--spacing);
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 48rem;
+  min-height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-special);
+  font-weight: 600;
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  color: var(--accent);
+  background: linear-gradient(currentColor 0 0) bottom left / var(
+    --underline,
+    0%
+  ) var(--line-width) no-repeat;
+
+  &:hover {
+    --underline: 100%;
+    text-decoration: none;
+  }
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) / 3);
+  list-style-type: none;
+}
+
+blockquote, .toc {
+  padding-left: var(--spacing);
+  border-left: 4px solid var(--accent);
+}
+
+pre {
+  padding: var(--spacing);
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+}
+
+/* Transitions */
+
+* {
+  transition-property: opacity, background-size;
+  transition-duration: var(--trans-time);
+  transition-timing-function: ease-in-out;
+}
+
+@view-transition {
+  navigation: auto;
+}

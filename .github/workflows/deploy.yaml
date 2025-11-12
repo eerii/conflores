@@ -1,8 +1,7 @@
 name: Deploy web 🌙
 on:
   push:
-    branches:
-      - main
+    branches: main
 
 jobs:
   build:
@@ -12,20 +11,15 @@ jobs:
       - name: Checkout 🦆
         uses: actions/checkout@v4
 
-      - name: Install Nix ❄️
-        uses: nixbuild/nix-quick-install-action@v29
-
-      - name: Cache Nix ☁️
-        uses: nix-community/cache-nix-action@v5
+      - name: Install Deno 🦕
+        uses: denoland/setup-deno@v2
         with:
-          primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix') }}
-          restore-prefixes-first-match: nix-${{ runner.os }}-
-
-      - name: Use Nix flake 🐙
-        uses: nicknovitski/nix-develop@v1
+          deno-version: v2.x
+          cache: true
+          cache-hash: ${{ hashFiles('**/deno.lock') }}
 
       - name: Build 📦
-        run: soupault
+        run: deno task build
 
       - name: Save artifacts 💽
         uses: actions/upload-pages-artifact@v3
@@ -45,6 +39,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Deploy 🦕
+      - name: Deploy ☁️
         id: deployment
         uses: actions/deploy-pages@v4

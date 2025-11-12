@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "build": "deno --allow-all npm:@11ty/eleventy",
+    "dev": "deno --allow-all npm:@11ty/eleventy --serve"
+  },
+  "imports": {
+    "@11ty/eleventy": "npm:@11ty/eleventy@^3.1.2",
+    "@11ty/eleventy-plugin-inclusive-language": "npm:@11ty/eleventy-plugin-inclusive-language@^1.0.3",
+    "@11ty/eleventy-plugin-rss": "npm:@11ty/eleventy-plugin-rss@^2.0.4",
+    "@11ty/eleventy-plugin-syntaxhighlight": "npm:@11ty/eleventy-plugin-syntaxhighlight@^5.0.2",
+    "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.56",
+    "eleventy-plugin-vento": "npm:eleventy-plugin-vento@^5.2.0",
+    "markdown-it": "npm:markdown-it@^14.1.0",
+    "markdown-it-attrs": "npm:markdown-it-attrs@^4.3.1"
+  },
+  "compilerOptions": {
+    "checkJs": true
+  }
+}

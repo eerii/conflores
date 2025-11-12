@@ -3,6 +3,4 @@
 .cache
 .cargo
 .direnv
-.harper-dictionary.txt
 build
-index.json

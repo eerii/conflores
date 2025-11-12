@@ -2,21 +2,16 @@
 
 a tiny technical blog.
 
-## run locally ❄️
+## run locally 🦕
 
 ```sh
-# Use the nix development shell
-nix develop
-# Or configure direnv so it does it automatically
-echo "use flake" > .envrc
-direnv allow
-# Open the site
-just dev
+deno run dev
 ```
 
 ## todo
 
-- add made with soupault, works with open web
+- add back atom feed
+- add works with open web
 - implement wcag accessibility guidelines
 - rework styling
     - [grid layout columns from css talk](https://layout-breakouts-builder.vercel.app/)
