@@ -27,9 +27,6 @@ header {
       border: none;
       height: 1em;
     }
-    &:hover img {
-      opacity: 0;
-    }
   }
 
   @media (width < 768px) {

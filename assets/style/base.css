@@ -52,14 +52,9 @@ p {
 
 a {
   color: var(--accent);
-  background: linear-gradient(currentColor 0 0) bottom left / var(
-    --underline,
-    0%
-  ) var(--line-width) no-repeat;
-
+  text-decoration-color: hsl(from var(--accent) h s 90);
   &:hover {
-    --underline: 100%;
-    text-decoration: none;
+    text-decoration-color: var(--accent);
   }
 }
 
@@ -84,7 +79,7 @@ pre {
 /* Transitions */
 
 * {
-  transition-property: opacity, background-size;
+  transition-property: opacity, background-size, text-decoration-color;
   transition-duration: var(--trans-time);
   transition-timing-function: ease-in-out;
 }

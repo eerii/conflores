@@ -10,7 +10,6 @@ deno run dev
 
 ## todo
 
-- add back atom feed
 - add works with open web
 - implement wcag accessibility guidelines
 - rework styling
@@ -21,5 +20,4 @@ deno run dev
     - improve colors and slightly bigger palette
     - webmentions styling
 - add filters on top (no notes, only some tags, ...)
-- write about indie web
 - write about migration and accessibility

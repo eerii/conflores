@@ -55,12 +55,6 @@ h1, h2, h3, h4, h5, h6 {
 b, strong {
   font-weight: bolder;
 }
-a {
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
 
 /* Remove default padding to avoid confusion */
 legend {

@@ -16,7 +16,12 @@ tags: []
   {{ for tag of tags }}
     <li class="p-category">{{ tag }}</li>
   {{ /for }}
+  {{ if mastodon }}
+    <li><a class="u-syndication" href={{ mastodon }}>Read on Mastodon</a></li>
+  {{ /if }}
 </ul>
+
+<div id="webmentions"></div>
 
 <div class="fill"></div>
 
@@ -27,5 +32,3 @@ tags: []
   <a class="u-url" href="{{ page.url |> url }}">{{ site.title }}</a>
   <a class="p-author" rel="author" href="{{ page.url |> url }}">eri</a>
 </div>
-
-<div id="webmentions"></div>

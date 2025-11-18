@@ -24,6 +24,7 @@
 }
 ul:has(.p-category) {
   flex-direction: row;
+  align-items: center;
   padding-left: 0;
 }
 
