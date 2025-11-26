@@ -29,7 +29,7 @@
 }
 
 img, pre {
-  border: var(--line-width) solid var(--accent);
+  border: var(--line-width) solid var(--primary-dark);
   border-radius: 0.25rem;
   margin-left: auto;
   margin-right: auto;

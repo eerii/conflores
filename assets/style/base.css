@@ -4,9 +4,13 @@
   --font: "Inter", sans-serif;
   --font-special: "Clash", sans-serif;
 
-  --fg: #000000;
-  --bg: #ffffff;
-  --accent: #3a6343;
+  --fg: #050604;
+  --bg: #f7f8f6;
+  --primary: #83b86e;
+  --primary-dark: #45633a;
+  --secondary: #aebbc1;
+  --accent: #b698dc;
+  --accent-dark: #9269c9;
 
   --spacing: 1.2rem;
   --line-width: 0.1em;
@@ -14,17 +18,41 @@
 
   color: var(--fg);
   accent-color: var(--accent);
-  background: linear-gradient(
-    to bottom,
-    var(--bg),
-    hsl(from var(--bg) 80 20 calc(l - 6))
-  );
-  background-attachment: fixed;
 
   font-family: var(--font);
 
   padding: 0 var(--spacing);
   scroll-behavior: smooth;
+
+  background: linear-gradient(
+    to bottom,
+    var(--bg),
+    hsl(from var(--primary) h s 95)
+  );
+  background-attachment: fixed;
+}
+
+:root:before {
+  content: "";
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%) rotate(45deg);
+  z-index: -10;
+
+  mask-image: url("/images/overlay.svg");
+  mask-size: repeat;
+
+  background: linear-gradient(
+    45deg,
+    var(--accent) 30%,
+    rgba(0, 0, 0, 0) 35%,
+    rgba(0, 0, 0, 0) 65%,
+    var(--accent) 70%
+  );
+  opacity: 0.2;
 }
 
 body {
@@ -51,7 +79,7 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--primary-dark);
   text-decoration-color: hsl(from var(--accent) h s 90);
   &:hover {
     text-decoration-color: var(--accent);

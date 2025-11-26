@@ -18,14 +18,47 @@
 .p-category {
   font-size: 0.8rem;
   margin-right: calc(var(--spacing) * 0.5);
+  color: var(--fg);
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
   &:before {
     content: "#";
   }
+  &:hover {
+    background-color: var(--accent);
+  }
+  &.z-active {
+    background-color: var(--accent);
+  }
+  &.z-first {
+    border-color: var(--primary-dark) !important;
+    &.z-active, &:hover {
+      background-color: var(--primary-dark) !important;
+      color: var(--bg);
+    }
+  }
+  & a {
+    color: var(--fg);
+    text-decoration: none;
+  }
 }
-ul:has(.p-category) {
+.tag-list {
   flex-direction: row;
   align-items: center;
   padding-left: 0;
+}
+#controls {
+  display: flex;
+  gap: calc(var(--spacing) * 0.5);
+  overflow-x: scroll;
+  padding-bottom: calc(var(--spacing) * 0.5);
+  & > .p-category {
+    padding: 0 0.4rem;
+    flex-shrink: 0;
+    &:before {
+      content: "";
+    }
+  }
 }
 
 .dt-published {
@@ -36,9 +69,10 @@ ul:has(.p-category) {
 
 .h-feed {
   justify-content: start;
-  gap: calc(var(--spacing) * 2);
+  gap: calc(var(--spacing) * 1);
   & > article {
     gap: calc(var(--spacing) * 0.5);
+    padding: calc(var(--spacing) * 0.5) 0;
     .p-name {
       &:after {
         content: attr(data-flower);
@@ -62,7 +96,12 @@ ul:has(.p-category) {
 
 .z-note {
   border-left: 0.2rem dotted var(--accent);
-  padding-left: var(--spacing);
+  padding-left: calc(var(--spacing) * 0.5) !important;
+  background: linear-gradient(
+    to right,
+    rgb(from var(--accent) r g b / 8%),
+    rgba(0, 0, 0, 0)
+  );
   & > *:last-child {
     margin-bottom: 0;
   }
@@ -81,23 +120,11 @@ ul:has(.p-category) {
 }
 
 .z-draft {
+  display: none;
   opacity: 0.5;
   background-color: #eeeeee;
 }
 
 section[role="doc-endnotes"] p {
   display: inline;
-}
-
-/* Controls */
-
-#controls {
-  display: none; /* TODO: finish checkboxes */
-  margin-bottom: var(--spacing);
-  &:has(#toggle-notes:not(:checked)) + .h-feed > .z-note {
-    display: none;
-  }
-  &:has(#toggle-drafts:not(:checked)) + .h-feed > .z-draft {
-    display: none;
-  }
 }

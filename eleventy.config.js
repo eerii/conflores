@@ -14,7 +14,9 @@ export default function (config) {
   config.addPassthroughCopy({ "assets": "." });
 
   // Collections
-  config.addCollection("posts", (api) => api.getFilteredByGlob("blog/**/*.md"));
+  config.addCollection("posts", (api) => api.getFilteredByGlob("blog/*.md"));
+  config.addCollection("notes", (api) => api.getFilteredByGlob("blog/notes/*.md"));
+  config.addCollection("all", (api) => api.getFilteredByGlob("blog{/,/notes/}*.md"));
 
   // Plugins
   plugins(config);
