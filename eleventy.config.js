@@ -16,7 +16,7 @@ export default function (config) {
   // Collections
   config.addCollection("posts", (api) => api.getFilteredByGlob("blog/*.md"));
   config.addCollection("notes", (api) => api.getFilteredByGlob("blog/notes/*.md"));
-  config.addCollection("all", (api) => api.getFilteredByGlob("blog{/,/notes/}*.md"));
+  config.addCollection("both", (api) => api.getFilteredByGlob("blog{/,/notes/}*.md"));
 
   // Plugins
   plugins(config);

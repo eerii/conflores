@@ -1,11 +1,11 @@
 ---
 layout: main
 main_class: h-feed column
-tag: all
+tag: both
 before: |
   <div id="controls">
     {{ set first = [ "all", "posts", "notes" ] }}
-    {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k))) }}
+    {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k) && k != "both")) }}
     {{ set other = Object.keys(filtered).sort((a, b) => filtered[b].length - filtered[a].length) }}
     {{ for t of first.concat(other) }}
       {{ set z_first = first.includes(t) ? "z-first" : "" }}

@@ -16,6 +16,14 @@
   --line-width: 0.1em;
   --trans-time: 200ms;
 
+  background-color: var(--bg);
+  background: linear-gradient(
+    to bottom,
+    var(--bg),
+    hsl(from var(--primary) h s 95)
+  );
+  background-attachment: fixed;
+
   color: var(--fg);
   accent-color: var(--accent);
 
@@ -23,13 +31,6 @@
 
   padding: 0 var(--spacing);
   scroll-behavior: smooth;
-
-  background: linear-gradient(
-    to bottom,
-    var(--bg),
-    hsl(from var(--primary) h s 95)
-  );
-  background-attachment: fixed;
 }
 
 :root:before {

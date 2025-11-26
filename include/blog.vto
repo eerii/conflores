@@ -5,8 +5,14 @@ tags: []
 ---
 <script src="/script/webmention.min.js" async=""></script>
 
-<h1 class="p-name">{{ title }}</h1>
+{{ if title }}
+  <h1 class="p-name">{{ title }}</h1>
+{{ /if }}
 <time class="dt-published">{{ page.date.toDateString() }}</time>
+
+{{ if mention }}
+  <p>In reply to <a class="u-in-reply-to" href="{{ mention }}">{{ mention }}</a></p>
+{{ /if }}
 
 <article class="e-content">
   {{ content }}
@@ -17,7 +23,9 @@ tags: []
     <li class="p-category"><a href="/tags/{{ tag }}">{{ tag }}</a></li>
   {{ /for }}
   {{ if mastodon }}
-    <li><a class="u-syndication" href="{{ mastodon }}">Read on Mastodon</a></li>
+    <li>
+      <a class="u-syndication" href="{{ mastodon }}">Read on Mastodon</a>
+    </li>
   {{ /if }}
 </ul>
 

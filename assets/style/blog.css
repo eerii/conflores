@@ -128,3 +128,22 @@
 section[role="doc-endnotes"] p {
   display: inline;
 }
+
+#not-found {
+  height: 80vh;
+  align-items: center;
+  justify-content: center;
+  & > a {
+    font-family: var(--font-special);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+}
+
+p:has(.u-in-reply-to) {
+  color: var(--accent);
+  font-style: italic;
+  & > a {
+    color: var(--accent) !important;
+  }
+}
