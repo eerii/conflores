@@ -5,8 +5,13 @@
   gap: 0;
 }
 
-.e-content > p, .e-content > pre, .e-content > section, main > .toc {
-  margin: var(--spacing) 0;
+.e-content {
+  & > p, & > pre, & > section, & > blockquote {
+    margin: var(--spacing) 0;
+  }
+  & > ul {
+    list-style-type: "—  ";
+  }
 }
 
 .p-category, .p-pronouns {

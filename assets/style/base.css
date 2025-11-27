@@ -20,7 +20,7 @@
   background: linear-gradient(
     to bottom,
     var(--bg),
-    hsl(from var(--primary) h s 95)
+    hsl(from var(--primary) h s 97)
   );
   background-attachment: fixed;
 
@@ -40,7 +40,7 @@
   height: 200%;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
   z-index: -10;
 
   mask-image: url("/images/overlay.svg");
@@ -96,13 +96,27 @@ ul {
 
 blockquote, .toc {
   padding-left: var(--spacing);
-  border-left: 4px solid var(--accent);
+  color: var(--accent-dark);
+  border-left: 0.2rem dotted var(--accent);
 }
 
 pre {
   padding: var(--spacing);
   font-size: 0.9rem;
   line-height: 1.3rem;
+  max-height: 28em;
+  overflow: scroll;
+}
+
+table, th, td {
+  border: 2px solid rgb(from var(--primary-dark) r g b / 20%);
+}
+table {
+  margin: var(--spacing) 0;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 0.5rem;
 }
 
 /* Transitions */

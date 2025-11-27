@@ -38,5 +38,10 @@ img, pre {
 
 img {
   max-height: 36rem;
-  max-width: min(32rem, 95vw);
+  max-width: min(32rem, 100%);
+}
+
+.table-wrapper {
+  display: block;
+  overflow-x: auto;
 }
