@@ -1,12 +1,16 @@
 <header class="row">
   <span class="site-name">
+    {{ if !title }}<h1 style="display: inline">{{ /if }}
     <a href="/">conflores</a>
+    {{ if !title }}</h1>{{ /if }}
     <img src="/images/icon.svg" alt="Flower logo" height=24px></img>
   </span>
-  <nav>
-    <a href="https://github.com/eerii">code</a>
-    <a href="https://eerii.itch.io">games</a>
-    <a href="https://todon.eu/@koala">mastodon</a>
-    <a href="mailto:eri@inventati.org">contact</a>
+  <nav aria-label="Main menu">
+    <ul>
+      <li><a href="https://github.com/eerii">code</a></li>
+      <li><a href="https://eerii.itch.io">games</a></li>
+      <li><a href="https://todon.eu/@koala">mastodon</a></li>
+      <li><a href="mailto:eri@inventati.org">contact</a></li>
+    </ul>
   </nav>
 </header>

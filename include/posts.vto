@@ -3,17 +3,19 @@ layout: main
 main_class: h-feed column
 tag: both
 before: |
-  <div id="controls">
-    {{ set first = [ "all", "posts", "notes" ] }}
-    {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k) && k != "both")) }}
-    {{ set other = Object.keys(filtered).sort((a, b) => filtered[b].length - filtered[a].length) }}
-    {{ for t of first.concat(other) }}
-      {{ set z_first = first.includes(t) ? "z-first" : "" }}
-      {{ set z_active = page.url.includes(t) || (t == "all" && page.url == "/") ? "z-active" : "" }}
-      {{ set href = t == "all" ? "/" : `/tags/${t}` }}
-      <a class="p-category {{ z_first }} {{ z_active }}" href="{{ href }}">{{ t }}</a>
-    {{ /for }}
-  </div>
+  <nav id="categories" aria-label="Categories">
+    <ul>
+      {{ set first = [ "all", "posts", "notes" ] }}
+      {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k) && k != "both")) }}
+      {{ set other = Object.keys(filtered).sort((a, b) => filtered[b].length - filtered[a].length) }}
+      {{ for t of first.concat(other) }}
+        {{ set z_first = first.includes(t) ? "z-first" : "" }}
+        {{ set aria_current = page.url.includes(t) || (t == "all" && page.url == "/") ? `aria-current = "true"` : "" }}
+        {{ set href = t == "all" ? "/" : `/tags/${t}` }}
+        <li><a class="p-category {{ z_first }}" {{aria_current}} href="{{ href }}">{{ t }}</a></li>
+      {{ /for }}
+    </ul>
+  </nav>
 ---
 {{
   set flower = "❄❅❈✼❉❊❋❃❁✾᪥❇".split("").map((v, i, a) =>
@@ -27,15 +29,13 @@ before: |
   {{ set note = post.filePathStem.includes("notes") }}
   {{ set z_note = note ? "z-note" : "" }}
   {{ set z_draft = post.data.draft ? "z-draft" : "" }}
-  <article class="h-entry column {{ z_note }} {{ z_draft }}">
+  <article class="h-entry column {{ z_note }} {{ z_draft }}" tabindex=0>
     {{ if post.data.title }}
       <h2 class="p-name" data-flower="{{ flower[i % flower.length] }}">
         <a class="u-url" href="{{ post.url }}">
           {{ post.data.title }}
         </a>
       </h2>
-    {{ else }}
-      <h2 class="p-name" hidden>{{ post.fileSlug }}</h2>
     {{ /if }}
     {{ if post.data.images?.length }}
       <div class="z-images">
@@ -44,11 +44,11 @@ before: |
         {{ /for }}
       </div>
     {{ /if }}
+    {{ if !post.data.title }}<a class="u-url" href="{{ post.url }}">{{ /if }}
     <p class="p-summary">{{ post.data.excerpt }}</p>
+    {{ if !post.data.title }}</a>{{ /if }}
     <span>
-      <a class="u-url" href="{{ post.url }}">
-        <time class="dt-published">{{ post.date.toDateString() }}</time>
-      </a>
+      <time class="dt-published">{{ post.date.toDateString() }}</time>
       ·
       {{ for tag of post.data.tags }}
         <a class="p-category" href="/tags/{{ tag }}">{{ tag }}</a>
@@ -57,3 +57,12 @@ before: |
   </article>
   {{ set i = i + 1 }}
 {{ /for }}
+
+<script>
+  document.querySelectorAll(".h-entry").forEach((entry) => {
+    const link = entry.querySelector(".u-url");
+    entry.addEventListener("click", (event) => {
+      if (!window.getSelection().toString()) link.click();
+    });
+  });
+</script>

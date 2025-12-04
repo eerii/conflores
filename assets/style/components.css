@@ -41,6 +41,12 @@ img {
   max-width: min(32rem, 100%);
 }
 
+.img-fit {
+  & > img {
+    min-width: 0;
+  }
+}
+
 .table-wrapper {
   display: block;
   overflow-x: auto;

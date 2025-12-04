@@ -12,10 +12,9 @@ header {
     font-size: 1.6rem;
   }
 
-  nav {
-    display: flex;
+  nav > ul {
+    flex-direction: row;
     gap: var(--spacing);
-    justify-content: center;
   }
 
   .site-name {
@@ -30,11 +29,11 @@ header {
   }
 
   @media (width < 768px) {
-    nav {
+    nav > ul {
       gap: calc(var(--spacing) * 0.5);
-    }
-    nav > a {
-      font-size: 1.4rem;
+      & > li {
+        font-size: 1.4rem;
+      }
     }
     div:last-child {
       display: none;
