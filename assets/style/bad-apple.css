@@ -1,0 +1,55 @@
+@import "https://fred-wang.github.io/MathFonts/LatinModern/mathfonts.css";
+
+:root {
+  --margin: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  grid-auto-rows: 1fr;
+  width: min(
+    calc(100vw - 2 * var(--margin)),
+    calc((100vh - 2 * var(--margin)) * var(--ratio))
+  );
+  aspect-ratio: var(--ratio);
+  margin: var(--margin);
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    overflow: hidden;
+    font-size: calc(min(1vw, 1.2vh));
+    /* border: 1px solid blue; */
+  }
+}
+
+#video, body > math {
+  display: none;
+}
+
+#start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: white;
+  padding: 1em;
+  border: 4px solid black;
+
+  font-size: 2em;
+  font-weight: bold;
+  font-family: LMRoman12;
+}
