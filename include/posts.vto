@@ -24,12 +24,13 @@ before: |
     )
   )
 }}
-{{ set i = 0 }}
-{{ for post of collections[tag].toReversed() }}
+
+{{ function render(post) }}
   {{ set note = post.filePathStem.includes("notes") }}
-  {{ set z_note = note ? "z-note" : "" }}
-  {{ set z_draft = post.data.draft ? "z-draft" : "" }}
-  <article class="h-entry column {{ z_note }} {{ z_draft }}" tabindex=0>
+  {{ set z_note = note ? " z-note" : "" }}
+  {{ set z_draft = post.data.draft ? " z-draft" : "" }}
+  {{ set z_highlight = post.data.highlight ? " z-highlight" : "" }}
+  <article class="h-entry column{{ z_note }}{{ z_draft }}{{ z_highlight }}" tabindex=0>
     {{ if post.data.title }}
       <h2 class="p-name" data-flower="{{ flower[i % flower.length] }}">
         <a class="u-url" href="{{ post.url }}">
@@ -55,6 +56,18 @@ before: |
       {{ /for }}
     </span>
   </article>
+{{ /function }}
+
+{{ set posts = collections[tag].toReversed() }}
+{{ set i = 0 }}
+
+{{ for post of posts.filter(p => p.data.highlight) }}
+  {{ render(post) }}
+  {{ set i = i + 1 }}
+{{ /for }}
+
+{{ for post of posts.filter(p => !p.data.highlight) }}
+  {{ render(post) }}
   {{ set i = i + 1 }}
 {{ /for }}
 

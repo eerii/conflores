@@ -44,12 +44,22 @@ header {
 /* Footer */
 
 footer {
+  display: flex;
+  justify-content: space-between;
   padding: calc(var(--spacing) * 0.5) 0;
   border-top: 0.2rem solid var(--fg);
   margin-top: var(--spacing);
-  p {
-    text-align: right;
+
+  p, a {
     font-size: 0.8rem;
+  }
+
+  div:first-child a:first-child {
+    font-weight: bolder;
+  }
+
+  div:nth-child(2) > p {
+    text-align: right;
     font-weight: bolder;
   }
 }

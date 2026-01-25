@@ -2,6 +2,7 @@
 title: interop and mathml core
 tags: [ "web-platform", "mathml" ]
 mastodon: https://todon.eu/@koala/115622368172883843
+highlight: true
 ---
 
 <link rel="stylesheet" href="https://fred-wang.github.io/MathFonts/XITS/mathfonts.css"/>
