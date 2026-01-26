@@ -3,19 +3,14 @@
 
 const COLUMNS = 40, ROWS = 30;
 const MATHML_NS = "http://www.w3.org/1998/Math/MathML";
-const WEIGHTS = [1, 3, 5, 4, 2, 3];
 
 const root = document.documentElement;
 const container = document.getElementById("container");
 const video = document.getElementById("video");
 const start = document.getElementById("start");
 
-// Setup CSS
-root.style.setProperty("--columns", `${COLUMNS}`);
-root.style.setProperty("--ratio", `${COLUMNS} / ${ROWS}`);
-
 // Gravity formulas
-const formulas = [
+const FORMULAS = [
   [
     `<mi>𝐠</mi>`,
     `<mi mathvariant="normal">Δ</mi> </mpadded> <mi>U</mi>`,
@@ -56,7 +51,7 @@ const formulas = [
   ],
 ];
 
-const formula_nodes = formulas.map((group) =>
+const FORMULA_ELEMENTS = FORMULAS.map((group) =>
   group.map((markup) => {
     const math = document.createElementNS(MATHML_NS, "math");
     math.setAttribute("display", "block");
@@ -65,16 +60,21 @@ const formula_nodes = formulas.map((group) =>
   })
 );
 
-function get_formula(max_width) {
-  const weights = WEIGHTS.slice(0, max_width);
-  const total = weights.reduce((a, b) => a + b, 0);
+const WEIGHTS = FORMULAS.map((_, i) => Math.sqrt(i + 1));
+
+function select_formula(max_width) {
+  // Weigthed random selection (to favour longer formulas)
+  const curr_weigths = WEIGHTS.slice(0, max_width);
+  const total = curr_weigths.reduce((a, b) => a + b);
   const rand = Math.random() * total;
+
   let width = 0, acc = 0;
-  for (; width < weights.length; width++) {
-    acc += weights[width];
+  for (; width < curr_weigths.length; width++) {
+    acc += curr_weigths[width];
     if (rand < acc) break;
   }
-  const group = formula_nodes[width];
+
+  const group = FORMULA_ELEMENTS[width];
   return {
     width: width + 1,
     node: group[Math.floor(Math.random() * group.length)],
@@ -88,6 +88,10 @@ const blank_pool = Array.from({ length: COLUMNS * ROWS }, () => {
   return cell;
 });
 
+// Setup CSS
+root.style.setProperty("--columns", `${COLUMNS}`);
+root.style.setProperty("--ratio", `${COLUMNS} / ${ROWS}`);
+
 // Track grid state
 const matrix = Array.from({ length: ROWS }, () => Array(COLUMNS).fill(null));
 const canvas = Object.assign(document.createElement("canvas"), {
@@ -99,25 +103,31 @@ const ctx = canvas.getContext("2d", { willReadFrequently: true });
 function create_cell(width, formula) {
   const cell = document.createElement("div");
   cell._span = width;
+  // Use CSS grid `span` to ocupy multiple grid cells
   if (width > 1) cell.style.gridColumn = `span ${width}`;
   if (formula) cell.appendChild(formula.cloneNode(true));
   return cell;
 }
 
-function get_span(el) {
+function cell_width(el) {
   return el?._span || 1;
 }
 
-function invalidate_cell(row, column) {
+// Clear the cell so that it is filled on the next update
+// It goes to the beginning of the cell and then sets every element in its width to null
+// This works since even if some of the following spaces needs to be white,
+// we are iterating in order in render so those will be tackled later
+function clear_cell(row, column) {
   const current = matrix[row][column];
   if (current === null) return;
   const start = typeof current === "number" ? current : column;
-  const span = get_span(matrix[row][start]);
+  const span = cell_width(matrix[row][start]);
   for (let column = start; column < start + span; column++) {
     matrix[row][column] = null;
   }
 }
 
+// Fills emtpy cells with randomly selected formulas
 function update_grid() {
   const cells = container.children;
   let i = 0;
@@ -127,23 +137,33 @@ function update_grid() {
       const entry = matrix[row][column];
       let target;
 
+      // The cell is already filled, skip until end
+      // It can be either a formula or a white space
       if (entry instanceof Element) {
         target = entry;
-        column += get_span(entry);
-      } else if (typeof entry === "number") {
+        column += cell_width(entry);
+      }
+      // The cell is a reference to the start, skip one
+      // This probably shouldn't happen but still
+      else if (typeof entry === "number") {
         column++;
-      } else {
+      }
+      // The cell is empty and should be filled
+      else {
         let gap = 0;
         while (column + gap < COLUMNS && matrix[row][column + gap] === null) {
           gap++;
         }
-        const { width, node } = get_formula(gap);
+        const { width, node } = select_formula(gap);
         target = create_cell(width, node);
         matrix[row][column] = target;
+        // Fills the cells in the width with references to this so they are "occupied"
         for (let k = 1; k < width; k++) matrix[row][column + k] = column;
         column += width;
       }
 
+      // Update the child list if it has changed
+      // This is not super efficient, but it saves some iterations
       if (cells[i] !== target) {
         if (cells[i]) {
           container.insertBefore(target, cells[i]);
@@ -153,6 +173,7 @@ function update_grid() {
       }
     }
   }
+  // Remove the unused cells
   while (container.children.length > i) {
     container.removeChild(container.lastChild);
   }
@@ -167,25 +188,31 @@ function render() {
   // First pass to update the grid state
   for (let row = 0; row < ROWS; row++) {
     for (let column = 0; column < COLUMNS; column++) {
+      // We use the red channel, and just check if it is more than 0.5
       const to_white = data[(row * COLUMNS + column) * 4] > 128;
       const current = matrix[row][column];
-      const is_blank = current instanceof Element && !current.firstChild;
+      const is_white = current instanceof Element && !current.firstChild;
 
-      if (is_blank && !to_white) {
+      // It is a white space and it should be filled
+      if (is_white && !to_white) {
         matrix[row][column] = null;
-      } else if (!is_blank && to_white) {
-        invalidate_cell(row, column);
+      }
+      // It is either empty or a formula, and it should be set to a white space
+      else if (!is_white && to_white) {
+        clear_cell(row, column);
         matrix[row][column] = blank_pool[row * COLUMNS + column];
       }
     }
   }
 
-  // Second pass to filter clusters of small formulas
+  // Second pass to filter clusters of small formulas. Isn't very optimized, but it helps visually
+  // Slow movements cause a lot of formulas to have a width of 1, since that's all that is available
+  // each frame. So we make a pass to repaint clusters of 3 consecutive 1-width formulas.
   for (let row = 0; row < ROWS; row++) {
     let seq = 0;
     for (let column = 0; column <= COLUMNS; column++) {
       const cell = matrix[row][column];
-      if (cell instanceof Element && cell.firstChild && get_span(cell) === 1) {
+      if (cell instanceof Element && cell.firstChild && cell_width(cell) === 1) {
         seq++;
       } else {
         if (seq >= 3) {
@@ -197,6 +224,8 @@ function render() {
   }
 
   update_grid();
+
+  // Next frame (should be synced to the video FPS, 30 in this case)
   video.requestVideoFrameCallback(render);
 }
 

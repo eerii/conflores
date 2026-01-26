@@ -30,7 +30,7 @@ body {
 
   & > * {
     overflow: hidden;
-    font-size: calc(min(1.1vw, 1.2vh));
+    font-size: calc(min(1.1vw, 1.3vh));
     /* border: 1px solid blue; */
   }
 }
