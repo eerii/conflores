@@ -142,13 +142,11 @@ function update_grid() {
       if (entry instanceof Element) {
         target = entry;
         column += cell_width(entry);
-      }
-      // The cell is a reference to the start, skip one
+      } // The cell is a reference to the start, skip one
       // This probably shouldn't happen but still
       else if (typeof entry === "number") {
         column++;
-      }
-      // The cell is empty and should be filled
+      } // The cell is empty and should be filled
       else {
         let gap = 0;
         while (column + gap < COLUMNS && matrix[row][column + gap] === null) {
@@ -196,8 +194,7 @@ function render() {
       // It is a white space and it should be filled
       if (is_white && !to_white) {
         matrix[row][column] = null;
-      }
-      // It is either empty or a formula, and it should be set to a white space
+      } // It is either empty or a formula, and it should be set to a white space
       else if (!is_white && to_white) {
         clear_cell(row, column);
         matrix[row][column] = blank_pool[row * COLUMNS + column];
@@ -212,7 +209,9 @@ function render() {
     let seq = 0;
     for (let column = 0; column <= COLUMNS; column++) {
       const cell = matrix[row][column];
-      if (cell instanceof Element && cell.firstChild && cell_width(cell) === 1) {
+      if (
+        cell instanceof Element && cell.firstChild && cell_width(cell) === 1
+      ) {
         seq++;
       } else {
         if (seq >= 3) {
@@ -242,3 +241,10 @@ globalThis.onkeydown = (e) =>
 
 // Initial draw
 update_grid();
+
+// Inside iframe
+if (window.self != window.top) {
+  start.hidden = true;
+  video.play();
+  render();
+}
