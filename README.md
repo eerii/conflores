@@ -10,14 +10,9 @@ deno run dev
 
 ## todo
 
-- add works with open web
-- implement wcag accessibility guidelines
-- rework styling
-    - [grid layout columns from css talk](https://layout-breakouts-builder.vercel.app/)
-    - better responsive mode
-    - more appropiate sizing
-    - add fun things to the website
-    - improve colors and slightly bigger palette
-    - webmentions styling
-- add filters on top (no notes, only some tags, ...)
+- finish food page
+    - stacked photo previews for notes
+    - add food reel to the main page
+    - use minified versions for grid, full for lightbox view
+- create simple games and code pages
 - write about migration and accessibility

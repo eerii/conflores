@@ -1,0 +1,11 @@
+<nav class="chips" aria-label="{{ label ?? 'Categories' }}">
+  <ul>
+    {{ for chip of chips }}
+      <li>
+        <a class="chip{{ chip.primary ? ' z-primary' : '' }}"{{ chip.current ? ' aria-current="true"' : '' }} href="{{ chip.url }}">
+          {{ chip.name }}
+        </a>
+      </li>
+    {{ /for }}
+  </ul>
+</nav>

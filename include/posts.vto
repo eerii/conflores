@@ -3,19 +3,12 @@ layout: main
 main_class: h-feed column
 tag: both
 before: |
-  <nav id="categories" aria-label="Categories">
-    <ul>
-      {{ set first = [ "all", "posts", "notes" ] }}
-      {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k) && k != "both")) }}
-      {{ set other = Object.keys(filtered).sort((a, b) => filtered[b].length - filtered[a].length) }}
-      {{ for t of first.concat(other) }}
-        {{ set z_first = first.includes(t) ? "z-first" : "" }}
-        {{ set aria_current = page.url.includes(t) || (t == "all" && page.url == "/") ? `aria-current = "true"` : "" }}
-        {{ set href = t == "all" ? "/" : `/tags/${t}` }}
-        <li><a class="p-category {{ z_first }}" {{aria_current}} href="{{ href }}">{{ t }}</a></li>
-      {{ /for }}
-    </ul>
-  </nav>
+  {{ set first = [ "all", "posts", "notes" ] }}
+  {{ set filtered = Object.fromEntries(Object.entries(collections).map(([k, v]) => [k, v.filter((e) => !e.data.draft)]).filter(([k, v]) => v.length > 0 && !first.includes(k) && k != "both" && k != "food")) }}
+  {{ set other = Object.keys(filtered).sort((a, b) => filtered[b].length - filtered[a].length) }}
+  {{ set allTags = first.concat(other) }}
+  {{ set chips = allTags.map(t => ({ name: t, url: t === "all" ? "/" : `/tags/${t}`, primary: first.includes(t), current: page.url.includes(t) || (t === "all" && page.url === "/") })) }}
+  {{ include "chips.vto" { chips, label: "Categories" } }}
 ---
 {{
   set flower = "❄❅❈✼❉❊❋❃❁✾᪥❇".split("").map((v, i, a) =>
@@ -58,7 +51,7 @@ before: |
   </article>
 {{ /function }}
 
-{{ set posts = collections[tag].toReversed() }}
+{{ set posts = collections[tag].toReversed().filter(p => !p.data.tags?.includes('food')) }}
 {{ set i = 0 }}
 
 {{ for post of posts.filter(p => p.data.highlight) }}

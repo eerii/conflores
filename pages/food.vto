@@ -1,0 +1,58 @@
+---
+layout: main
+title: food
+main_class: food-page column
+pagination:
+  data: food.allCategories
+  size: 1
+  alias: cat
+permalink: /food/{{ cat.url }}index.html
+eleventyExcludeFromCollections: true
+---
+
+{{ set chips = food.allCategories.map(c => ({ ...c, url: '/food/' + c.url, current: c.slug === cat.slug })) }}
+{{ include "chips.vto" { chips, label: "Food categories" } }}
+
+<div class="food-gallery">
+  {{ for item of food.items }}
+    {{ if cat.slug !== 'all' }}
+      {{ if cat.slug === 'cooking' && item.type !== 'image' }}{{ continue }}{{ /if }}
+      {{ if cat.slug === 'notes' && item.type !== 'note' }}{{ continue }}{{ /if }}
+      {{ if cat.slug !== 'cooking' && cat.slug !== 'notes' && (!item.tags || !item.tags.includes(cat.slug)) }}{{ continue }}{{ /if }}
+    {{ /if }}
+
+    {{ if item.type === 'note' }}
+      <a class="food-card z-accent" href="{{ item.url }}">
+        {{ if item.thumbnail }}
+          <img src="{{ item.thumbnail }}" alt="{{ item.description }}" loading="lazy">
+        {{ /if }}
+        <span class="card-info">
+          <span class="card-desc">{{ item.description }}</span>
+          <span class="card-tags">
+            {{ for tag of item.tags }}
+              <span class="card-tag">{{ tag }}</span>
+            {{ /for }}
+          </span>
+          <time class="card-date">{{ item.date }}</time>
+        </span>
+      </a>
+    {{ else }}
+      <button
+        class="food-card"
+        data-src="{{ item.src }}"
+        data-description="{{ item.description }}"
+        data-date="{{ item.date }}"
+      >
+        <img src="{{ item.src }}" alt="{{ item.description }}" loading="lazy">
+        <span class="card-info">
+          <span class="card-desc">{{ item.description }}</span>
+          <time class="card-date">{{ item.date }}</time>
+        </span>
+      </button>
+    {{ /if }}
+  {{ /for }}
+</div>
+
+<dialog class="food-lightbox"></dialog>
+
+<script src="/script/gallery.js"></script>
