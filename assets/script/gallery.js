@@ -1,83 +1,67 @@
-const grid = document.querySelector(".food-gallery");
-if (grid) {
-  const layout = () => {
-    const items = grid.querySelectorAll(".food-card");
-    const row_height = parseInt(getComputedStyle(grid).gridAutoRows, 10) || 8;
-    const row_gap = parseInt(getComputedStyle(grid).gap, 10) || 16;
+function masonry(container) {
+  container.classList.add("masonry-ready");
+  const cards = [...container.children];
+  if (!cards.length) return;
 
-    for (const item of items) {
-      item.style.removeProperty("--row-span");
-      const row_span = Math.ceil(
-        (item.scrollHeight + row_gap) / (row_height + row_gap),
-      );
-      item.style.setProperty("--row-span", row_span);
-    }
-  };
+  let cols = 3;
+  if (window.matchMedia("(max-width: 768px)").matches) cols = 2;
+  if (window.matchMedia("(max-width: 480px)").matches) cols = 1;
 
-  let layout_pending = false;
-  const schedule_layout = () => {
-    if (!layout_pending) {
-      layout_pending = true;
-      requestAnimationFrame(() => {
-        layout();
-        layout_pending = false;
-      });
-    }
-  };
+  const fontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const gap = isNaN(fontSize) ? 8 : fontSize * 0.5;
+  const w = (container.clientWidth - gap * (cols - 1)) / cols;
+  const heights = new Array(cols).fill(0);
 
-  layout();
+  for (const card of cards) {
+    const col = heights.indexOf(Math.min(...heights));
+    card.style.position = "absolute";
+    card.style.width = `${w}px`;
+    card.style.left = `${col * (w + gap)}px`;
+    card.style.top = `${heights[col]}px`;
+    heights[col] += card.offsetHeight + gap;
+  }
 
-  const images = grid.querySelectorAll("img");
-  let loaded = 0;
-  images.forEach((img) => {
-    if (img.complete) {
-      loaded++;
-      if (loaded === images.length) layout();
-    } else {
-      img.addEventListener("load", () => {
-        loaded++;
-        if (loaded === images.length) layout();
-      });
-    }
-  });
-
-  window.addEventListener("resize", schedule_layout);
+  container.style.height = `${Math.max(...heights)}px`;
 }
 
-const dialog = document.querySelector(".food-lightbox");
-if (dialog) {
-  document.querySelectorAll(".food-card[data-src]").forEach((card) => {
-    card.addEventListener("click", () => {
-      dialog.innerHTML = "";
+const gallery = document.querySelector(".food-gallery");
+if (gallery) {
+  let timer;
+  const ro = new ResizeObserver(() => {
+    clearTimeout(timer);
+    timer = setTimeout(() => masonry(gallery), 50);
+  });
+  ro.observe(gallery);
+  [...gallery.children].forEach((card) => ro.observe(card));
+}
 
-      const inner = document.createElement("div");
-      inner.className = "lightbox-inner";
+document.querySelectorAll(".food-stack").forEach((stack) => {
+  const imgs = stack.querySelectorAll(".stack-img");
+  const prevBtn = stack.querySelector(".stack-prev");
+  const nextBtn = stack.querySelector(".stack-next");
+  const srcs = Array.from(imgs, (img) => img.src);
+  let idx = 0;
 
-      const wrap = document.createElement("div");
-      wrap.className = "lightbox-image-wrap";
+  const preload = (i) => {
+    if (i >= 0 && i < srcs.length) new Image().src = srcs[i];
+  };
 
-      const img = document.createElement("img");
-      img.src = card.dataset.src;
-      img.alt = card.dataset.description;
-      wrap.appendChild(img);
+  const show = (i) => {
+    imgs[idx].classList.add("stack-img-hidden");
+    idx = (i + imgs.length) % imgs.length;
+    imgs[idx].classList.remove("stack-img-hidden");
+    preload(idx + 1);
+    preload(idx - 1);
+  };
 
-      const close = document.createElement("button");
-      close.className = "lightbox-close";
-      close.textContent = "×";
-      close.addEventListener("click", () => dialog.close());
-      wrap.appendChild(close);
-
-      const desc = document.createElement("p");
-      desc.textContent = card.dataset.description;
-      const date = document.createElement("time");
-      date.className = "lightbox-date";
-      date.textContent = card.dataset.date;
-
-      inner.appendChild(wrap);
-      inner.appendChild(desc);
-      inner.appendChild(date);
-      dialog.appendChild(inner);
-      dialog.showModal();
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(idx - 1);
     });
-  });
-}
+    nextBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(idx + 1);
+    });
+  }
+});

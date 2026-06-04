@@ -8,10 +8,14 @@ pagination:
   alias: cat
 permalink: /food/{{ cat.url }}index.html
 eleventyExcludeFromCollections: true
+before: |
+  {{ set chips = food.allCategories.map(c => ({ ...c, url: '/food/' + c.url, current: c.slug === cat.slug })) }}
+  {{ include "chips.vto" { chips, label: "Food categories" } }}
 ---
 
-{{ set chips = food.allCategories.map(c => ({ ...c, url: '/food/' + c.url, current: c.slug === cat.slug })) }}
-{{ include "chips.vto" { chips, label: "Food categories" } }}
+<h1>food from plants</h1>
+
+<p>tasty vegan food i made over the years. <i>when not specified, assume that all mentions of cheese, meat and other animal products are the plant based equivalent :3</i></p>
 
 <div class="food-gallery">
   {{ for item of food.items }}
@@ -22,28 +26,56 @@ eleventyExcludeFromCollections: true
     {{ /if }}
 
     {{ if item.type === 'note' }}
-      <a class="food-card z-accent" href="{{ item.url }}">
-        {{ if item.thumbnail }}
-          <img src="{{ item.thumbnail }}" alt="{{ item.description }}" loading="lazy">
-        {{ /if }}
-        <span class="card-info">
-          <span class="card-desc">{{ item.description }}</span>
-          <span class="card-tags">
-            {{ for tag of item.tags }}
-              <span class="card-tag">{{ tag }}</span>
-            {{ /for }}
+      {{ if item.images?.length > 1 }}
+        <a class="food-card z-accent food-stack" href="{{ item.url }}">
+          {{ set imgIdx = 0 }}
+          {{ for img of item.images }}
+            <img
+              src="{{ img }}"
+              alt="{{ item.description }}"
+              loading="{{ imgIdx === 0 ? 'eager' : 'lazy' }}"
+              class="stack-img{{ imgIdx !== 0 ? ' stack-img-hidden' : '' }}"
+            >
+            {{ set imgIdx = imgIdx + 1 }}
+          {{ /for }}
+          <span class="stack-arrows">
+            <button class="stack-arrow stack-prev" aria-label="Previous image"></button>
+            <button class="stack-arrow stack-next" aria-label="Next image"></button>
           </span>
-          <time class="card-date">{{ item.date }}</time>
-        </span>
-      </a>
+          <span class="card-info">
+            <span class="card-desc">{{ item.description }}</span>
+            <span class="card-tags">
+              {{ for tag of item.tags }}
+                <span class="card-tag">{{ tag }}</span>
+              {{ /for }}
+            </span>
+            <time class="card-date">{{ item.date }}</time>
+          </span>
+        </a>
+      {{ else }}
+        <a class="food-card z-accent" href="{{ item.url }}">
+          {{ if item.thumbnail }}
+            <img src="{{ item.thumbnail }}" alt="{{ item.description }}" loading="lazy">
+          {{ /if }}
+          <span class="card-info">
+            <span class="card-desc">{{ item.description }}</span>
+            <span class="card-tags">
+              {{ for tag of item.tags }}
+                <span class="card-tag">{{ tag }}</span>
+              {{ /for }}
+            </span>
+            <time class="card-date">{{ item.date }}</time>
+          </span>
+        </a>
+      {{ /if }}
     {{ else }}
       <button
         class="food-card"
-        data-src="{{ item.src }}"
+        data-lightbox="{{ item.src }}"
         data-description="{{ item.description }}"
         data-date="{{ item.date }}"
       >
-        <img src="{{ item.src }}" alt="{{ item.description }}" loading="lazy">
+        <img src="{{ item.thumb ?? item.src }}" alt="{{ item.description }}" loading="lazy">
         <span class="card-info">
           <span class="card-desc">{{ item.description }}</span>
           <time class="card-date">{{ item.date }}</time>
@@ -53,6 +85,6 @@ eleventyExcludeFromCollections: true
   {{ /for }}
 </div>
 
-<dialog class="food-lightbox"></dialog>
+{{ include "lightbox.vto" }}
 
 <script src="/script/gallery.js"></script>

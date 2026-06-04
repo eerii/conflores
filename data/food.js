@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import thumb from "../config/thumb.js";
 
 const FOOD_DIR = "assets/food";
 const NOTES_DIR = "blog/notes";
@@ -126,6 +127,16 @@ export default async function () {
       };
     })
     .filter((item) => !item.draft);
+
+  for (const item of photoItems) {
+    try {
+      const filePath = join(FOOD_DIR, item.src.replace(/^\/food\//, ""));
+      item.thumb = await thumb(filePath, item.slug, "build/_food-thumbs", "/_food-thumbs");
+    } catch (e) {
+      console.error("Failed to generate thumbnail for:", item.src, e);
+      item.thumb = item.src;
+    }
+  }
 
   const allItems = [...photoItems, ...foodNotes].sort(
     (a, b) => b.date.localeCompare(a.date),

@@ -38,3 +38,16 @@ tags: []
 </div>
 
 <div id="webmentions"></div>
+
+{{ include "lightbox.vto" }}
+
+<script>
+document.querySelectorAll(".e-content img").forEach((img) => {
+  img.dataset.lightbox = img.src;
+  img.style.cursor = "pointer";
+});
+(function () {
+  const groups = document.querySelectorAll(".e-content .row.img-fit");
+  groups.forEach((g) => g.setAttribute("data-lightbox-group", ""));
+})();
+</script>

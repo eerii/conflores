@@ -17,7 +17,7 @@
   </head>
   <body>
     {{ include "header.vto" }}
-    {{ if before }}{{ vto { collections } }}{{ before }}{{ /vto }}{{ /if }}
+    {{ if before }}{{ vto { collections, food, cat } }}{{ before }}{{ /vto }}{{ /if }}
     <main {{ if main_class }}class="{{ main_class }}"{{ /if }}>
       {{ content }}
     </main>

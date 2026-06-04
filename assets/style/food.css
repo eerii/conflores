@@ -3,27 +3,29 @@ main.food-page {
 }
 
 .food-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 8px;
-  gap: calc(var(--spacing) * 0.5);
+  position: relative;
   margin-top: calc(var(--spacing) * 0.25);
 }
 
+.food-gallery:not(.masonry-ready) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--spacing) * 0.5);
+}
+
 @media (max-width: 768px) {
-  .food-gallery {
+  .food-gallery:not(.masonry-ready) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .food-gallery {
+  .food-gallery:not(.masonry-ready) {
     grid-template-columns: 1fr;
   }
 }
 
 .food-card {
-  grid-row-end: span var(--row-span, 1);
   align-self: start;
   display: block;
   padding: 0;
@@ -175,3 +177,132 @@ main.food-page {
   color: var(--secondary);
   margin-top: 0.5em;
 }
+
+.lightbox-nav,
+.stack-arrow {
+  border-radius: 50%;
+  border: none;
+  background: var(--primary-dark);
+  color: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.lightbox-nav:hover,
+.stack-arrow:hover {
+  background: var(--accent-dark);
+}
+
+.lightbox-nav::after {
+  content: "";
+  display: block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-left: 2.5px solid var(--bg);
+  border-bottom: 2.5px solid var(--bg);
+}
+
+.lightbox-prev {
+  left: 0.5rem;
+}
+
+.lightbox-prev::after {
+  transform: rotate(45deg);
+  margin-left: 3px;
+}
+
+.lightbox-next {
+  right: 0.5rem;
+}
+
+.lightbox-next::after {
+  transform: rotate(-135deg);
+  margin-right: 3px;
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--bg);
+  background: var(--primary-dark);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Image stack for multi-image notes */
+
+.food-stack {
+  position: relative;
+}
+
+.food-stack .stack-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.food-stack .stack-img-hidden {
+  display: none;
+}
+
+.food-stack .stack-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.food-stack:hover .stack-arrows {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.stack-arrow {
+  width: 2rem;
+  height: 2rem;
+}
+
+.stack-arrow::after {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-left: 2px solid var(--bg);
+  border-bottom: 2px solid var(--bg);
+}
+
+.stack-prev::after {
+  transform: rotate(45deg);
+  margin-left: 2px;
+}
+
+.stack-next::after {
+  transform: rotate(-135deg);
+  margin-right: 2px;
+}
+

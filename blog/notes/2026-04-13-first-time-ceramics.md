@@ -1,5 +1,5 @@
 ---
-tags: []
+tags: ["art"]
 mastodon: https://todon.eu/@koala/116398399747370315
 ---
 

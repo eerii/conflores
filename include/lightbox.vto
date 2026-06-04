@@ -1,0 +1,123 @@
+<dialog class="food-lightbox"></dialog>
+
+<script>
+(function () {
+  const dialog = document.querySelector(".food-lightbox");
+  if (!dialog) return;
+
+  let images = [];
+  let currentIndex = 0;
+
+  function show(index) {
+    currentIndex = index;
+    const item = images[index];
+    dialog.innerHTML = "";
+
+    const inner = document.createElement("div");
+    inner.className = "lightbox-inner";
+
+    const wrap = document.createElement("div");
+    wrap.className = "lightbox-image-wrap";
+
+    const img = document.createElement("img");
+    img.src = item.full;
+    img.alt = item.description || "";
+    wrap.appendChild(img);
+
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "lightbox-close";
+    closeBtn.textContent = "×";
+    closeBtn.addEventListener("click", () => dialog.close());
+    wrap.appendChild(closeBtn);
+
+    if (images.length > 1) {
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "lightbox-nav lightbox-prev";
+      prevBtn.setAttribute("aria-label", "Previous image");
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        show((currentIndex - 1 + images.length) % images.length);
+      });
+      wrap.appendChild(prevBtn);
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "lightbox-nav lightbox-next";
+      nextBtn.setAttribute("aria-label", "Next image");
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        show((currentIndex + 1) % images.length);
+      });
+      wrap.appendChild(nextBtn);
+
+      const counter = document.createElement("span");
+      counter.className = "lightbox-counter";
+      counter.textContent = `${index + 1} / ${images.length}`;
+      wrap.appendChild(counter);
+    }
+
+    inner.appendChild(wrap);
+
+    if (item.description) {
+      const desc = document.createElement("p");
+      desc.textContent = item.description;
+      inner.appendChild(desc);
+    }
+
+    if (item.date) {
+      const dateEl = document.createElement("time");
+      dateEl.className = "lightbox-date";
+      dateEl.textContent = item.date;
+      inner.appendChild(dateEl);
+    }
+
+    dialog.appendChild(inner);
+    dialog.showModal();
+  }
+
+  function collectImages(el) {
+    const group = el.closest("[data-lightbox-group]");
+    if (group) {
+      return Array.from(
+        group.querySelectorAll("[data-lightbox]"),
+        (trigger) => ({
+          full: trigger.dataset.lightbox,
+          description: trigger.dataset.description,
+          date: trigger.dataset.date,
+        })
+      );
+    }
+    return [{
+      full: el.dataset.lightbox,
+      description: el.dataset.description,
+      date: el.dataset.date,
+    }];
+  }
+
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest("[data-lightbox]");
+    if (!trigger) return;
+    e.preventDefault();
+    images = collectImages(trigger);
+    const group = trigger.closest("[data-lightbox-group]");
+    const idx = group
+      ? Array.from(group.querySelectorAll("[data-lightbox]")).indexOf(trigger)
+      : 0;
+    show(idx);
+  });
+
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  dialog.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" && images.length > 1) {
+      e.preventDefault();
+      show((currentIndex - 1 + images.length) % images.length);
+    }
+    if (e.key === "ArrowRight" && images.length > 1) {
+      e.preventDefault();
+      show((currentIndex + 1) % images.length);
+    }
+  });
+})();
+</script>

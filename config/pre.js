@@ -3,6 +3,7 @@
 import process from "node:process";
 import markdown_it from "markdown-it";
 import markdown_it_attrs from "markdown-it-attrs";
+import thumb from "./thumb.js";
 
 export function md() {
   return markdown_it({
@@ -36,16 +37,38 @@ export default function (config) {
     const doc = new DOMParser().parseFromString(html, "text/html");
 
     // Excerpts
-    // Get the p-summary class or the first paragraph
-    const excerpt = doc.querySelector(".p-summary") || doc.querySelector("p");
-    if (excerpt) {
-      data.excerpt = excerpt.textContent;
+    const excerptEls = doc.querySelectorAll("p:not(.no-index)");
+    if (excerptEls && excerptEls.length > 0) {
+      const filtered = Array.from(excerptEls).filter(
+        (p) => p.textContent.trim() !== ""
+      );
+      if (filtered.length > 0) {
+        data.excerpts = filtered.map((p) => p.innerHTML);
+        data.excerpt = filtered[0].textContent;
+      }
     }
 
-    // Images
-    const images = doc.querySelectorAll("img:not(.no-index)");
-    if (images) {
-      data.images = images;
+    // Media (images + videos)
+    const media = [];
+
+    for (const img of doc.querySelectorAll("img:not(.no-index)")) {
+      const src = img.getAttribute("src");
+      if (src && !src.startsWith("http")) {
+        try {
+          const filePath = `assets${src}`;
+          const slug = src.replace(/^\/images\//, "").replace(/\.[^.]+$/, "").replace(/\//g, "-");
+          img.setAttribute("src", await thumb(filePath, slug, "build/_media-thumbs", "/_media-thumbs"));
+        } catch { /* keep original src */ }
+      }
+      media.push(img.outerHTML);
+    }
+
+    for (const vid of doc.querySelectorAll("video:not(.no-index)")) {
+      media.push(vid.outerHTML);
+    }
+
+    if (media.length > 0) {
+      data.media = media;
     }
   });
 }

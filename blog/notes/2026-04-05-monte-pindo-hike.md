@@ -1,5 +1,5 @@
 ---
-tags: []
+tags: ["outdoors"]
 mastodon: https://todon.eu/@koala/116352651189358105
 ---
 

@@ -18,6 +18,11 @@ header {
   }
 
   .site-name {
+    h1 {
+      display: inline;
+      font: inherit;
+      margin: 0;
+    }
     a {
       color: var(--fg) !important;
     }

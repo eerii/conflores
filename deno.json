@@ -9,6 +9,7 @@
     "@11ty/eleventy-plugin-rss": "npm:@11ty/eleventy-plugin-rss@^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "npm:@11ty/eleventy-plugin-syntaxhighlight@^5.0.2",
     "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.56",
+    "@11ty/eleventy-img": "npm:@11ty/eleventy-img@^6.0.0",
     "eleventy-plugin-vento": "npm:eleventy-plugin-vento@^5.4.3",
     "markdown-it": "npm:markdown-it@^14.2.0",
     "markdown-it-attrs": "npm:markdown-it-attrs@^4.5.0"

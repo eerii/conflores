@@ -31,16 +31,25 @@ before: |
         </a>
       </h2>
     {{ /if }}
-    {{ if post.data.images?.length }}
-      <div class="z-images">
-        {{ for img of post.data.images }}
-          {{ img.outerHTML }}
+    {{ if post.data.media?.length }}
+      <div class="z-media">
+        {{ for item of post.data.media }}
+          {{ item |> safe }}
         {{ /for }}
       </div>
     {{ /if }}
-    {{ if !post.data.title }}<a class="u-url" href="{{ post.url }}">{{ /if }}
-    <p class="p-summary">{{ post.data.excerpt }}</p>
-    {{ if !post.data.title }}</a>{{ /if }}
+    {{ if !post.data.title }}
+      <a class="u-url" href="{{ post.url }}" hidden></a>
+    {{ /if }}
+    {{ if note && post.data.excerpts?.length }}
+      <div class="z-excerpts">
+        {{ for ex of post.data.excerpts }}
+          <p class="p-summary">{{ ex |> safe }}</p>
+        {{ /for }}
+      </div>
+    {{ else }}
+      <p class="p-summary">{{ post.data.excerpt }}</p>
+    {{ /if }}
     <span>
       <time class="dt-published">{{ post.date.toDateString() }}</time>
       ·
@@ -59,10 +68,28 @@ before: |
   {{ set i = i + 1 }}
 {{ /for }}
 
+{{ if page.url === "/" }}
+  {{ set foodImages = food.items.filter(i => i.type === 'image').slice(0, 5) }}
+  {{ if foodImages.length > 0 }}
+    <section class="z-food-row">
+      <h2><a href="/food">food from plants</a></h2>
+      <div class="z-food-images">
+        {{ for item of foodImages }}
+          <a href="/food" class="z-food-thumb" data-lightbox="{{ item.src }}" data-description="{{ item.description }}" data-date="{{ item.date }}">
+            <img src="{{ item.thumb ?? item.src }}" alt="{{ item.description }}" loading="lazy">
+          </a>
+        {{ /for }}
+      </div>
+    </section>
+  {{ /if }}
+{{ /if }}
+
 {{ for post of posts.filter(p => !p.data.highlight) }}
   {{ render(post) }}
   {{ set i = i + 1 }}
 {{ /for }}
+
+{{ include "lightbox.vto" }}
 
 <script>
   document.querySelectorAll(".h-entry").forEach((entry) => {
