@@ -17,6 +17,9 @@ export default function (config) {
   config.addCollection("posts", (api) => api.getFilteredByGlob("blog/*.md"));
   config.addCollection("notes", (api) => api.getFilteredByGlob("blog/notes/*.md"));
   config.addCollection("both", (api) => api.getFilteredByGlob("blog{/,/notes/}*.md"));
+  config.addCollection("games", (api) =>
+    api.getFilteredByGlob("games/*.md").sort((a, b) => b.date - a.date),
+  );
 
   // Plugins
   plugins(config);

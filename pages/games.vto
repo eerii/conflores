@@ -1,0 +1,55 @@
+---
+layout: main
+title: tiny games
+permalink: /games/
+main_class: games-page column
+eleventyExcludeFromCollections: true
+---
+
+<h1>tiny games</h1>
+
+<p>
+  i like making small games a lot, and i participated in a few game jams.
+  i have used both <a href="https://bevyengine.org">bevy</a> and my <a href="https://github.com/eerii/fresa">own engine</a>.
+  you can find all of them on <a href="https://eerii.itch.io">my itch.io page</a>.
+</p>
+
+<i>
+  no generative ai was used while making any of these games. not for code, not for art.
+</i>
+
+<div class="games-gallery">
+  {{ for game of collections.games }}
+    <div class="game-card z-accent">
+      {{ if game.data.cover }}
+        <a class="game-cover-link" href="{{ game.data.url }}">
+          <img src="{{ game.data.cover }}" alt="{{ game.data.title }}" loading="lazy">
+        </a>
+      {{ /if }}
+      <span class="card-info">
+        <a class="card-desc" href="{{ game.data.url }}">{{ game.data.title }}</a>
+        {{ if game.templateContent }}
+          <span class="game-blurb">{{ game.content |> safe }}</span>
+        {{ /if }}
+        {{ if game.data.date }}
+          <time class="card-date">{{ game.data.date.toDateString() }}</time>
+        {{ /if }}
+        {{ if game.data.repo }}
+          <span class="game-meta">
+            <a class="game-repo" href="{{ game.data.repo }}">code</a>
+            {{ if game.data.coauthors }}
+              <span class="game-coauthors">
+                {{ for coauthor of game.data.coauthors }} · feat. {{ coauthor }}{{ /for }}
+              </span>
+            {{ /if }}
+          </span>
+        {{ /if }}
+        <span class="card-tags">
+          {{ for tag of game.data.tags }}
+            <span class="card-tag">{{ tag }}</span>
+          {{ /for }}
+        </span>
+      </span>
+    </div>
+  {{ /for }}
+</div>
