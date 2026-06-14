@@ -16,7 +16,7 @@ function parseFilename(filename) {
   );
   if (!match) return null;
   const [, dateStr, slug] = match;
-  return { date: dateStr, description: slugToDescription(slug), slug };
+  return { date: new Date(dateStr + 'T00:00:00'), description: slugToDescription(slug), slug };
 }
 
 async function scanDir(baseDir, subPath = "") {
@@ -101,7 +101,7 @@ export default async function () {
     foodNotes.push({
       type: "note",
       slug,
-      date: dateStr,
+      date: new Date(dateStr + 'T00:00:00'),
       description: slugToDescription(slug),
       thumbnail: images[0] || null,
       images,
@@ -139,7 +139,7 @@ export default async function () {
   }
 
   const allItems = [...photoItems, ...foodNotes].sort(
-    (a, b) => b.date.localeCompare(a.date),
+    (a, b) => b.date - a.date,
   );
 
   const noteTags = [

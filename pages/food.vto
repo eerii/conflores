@@ -49,7 +49,7 @@ before: |
                 <span class="card-tag">{{ tag }}</span>
               {{ /for }}
             </span>
-            <time class="card-date">{{ item.date }}</time>
+            <time class="card-date">{{ item.date.toDateString() }}</time>
           </span>
         </a>
       {{ else }}
@@ -64,7 +64,7 @@ before: |
                 <span class="card-tag">{{ tag }}</span>
               {{ /for }}
             </span>
-            <time class="card-date">{{ item.date }}</time>
+            <time class="card-date">{{ item.date.toDateString() }}</time>
           </span>
         </a>
       {{ /if }}
@@ -73,12 +73,12 @@ before: |
         class="food-card"
         data-lightbox="{{ item.src }}"
         data-description="{{ item.description }}"
-        data-date="{{ item.date }}"
+        data-date="{{ item.date.toDateString() }}"
       >
         <img src="{{ item.thumb ?? item.src }}" alt="{{ item.description }}" loading="lazy">
         <span class="card-info">
           <span class="card-desc">{{ item.description }}</span>
-          <time class="card-date">{{ item.date }}</time>
+          <time class="card-date">{{ item.date.toDateString() }}</time>
         </span>
       </button>
     {{ /if }}

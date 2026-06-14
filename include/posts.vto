@@ -75,7 +75,7 @@ before: |
       <h2><a href="/food">food from plants</a></h2>
       <div class="z-food-images">
         {{ for item of foodImages }}
-          <a href="/food" class="z-food-thumb" data-lightbox="{{ item.src }}" data-description="{{ item.description }}" data-date="{{ item.date }}">
+          <a href="/food" class="z-food-thumb" data-lightbox="{{ item.src }}" data-description="{{ item.description }}" data-date="{{ item.date.toDateString() }}">
             <img src="{{ item.thumb ?? item.src }}" alt="{{ item.description }}" loading="lazy">
           </a>
         {{ /for }}

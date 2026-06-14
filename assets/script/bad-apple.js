@@ -245,6 +245,5 @@ update_grid();
 // Inside iframe
 if (window.self != window.top) {
   start.hidden = true;
-  video.play();
   render();
 }
